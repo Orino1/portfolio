@@ -1,0 +1,57 @@
+.container  {
+    background-color: #f9f8f9;
+    border-bottom: 1px solid rgba(218, 218, 218, 0.423);
+}
+
+.container > div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container > div > div:nth-child(1) h1 {
+    font-weight: 400;
+}
+
+.container > div > div:nth-child(1) h1 span {
+    color: #4c04a6;
+}
+
+.container > div > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.container > div > div:nth-child(2) > a {
+    position: relative;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+.container > div > div:nth-child(2) a:nth-child(1) i {
+    transform: rotate(180deg);
+}
+
+.container > div > div:nth-child(2) a label {
+    position: absolute;
+    top: -50px;
+    left: -50;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px 2px rgba(220, 220, 220, 0.487);
+    padding: 10px 20px;
+    text-align: center;
+    opacity: 0;
+    transition: all ease 0.2s;
+    font-size: 14px;
+}
+
+.container > div > div:nth-child(2) a:hover label {
+    opacity: 1;
+}

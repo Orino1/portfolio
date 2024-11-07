@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 150px;
+}
+
+.container > div {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section > h1 {
+    font-size: 60px;
+    font-weight: 400;
+}
+
+
+.section > p {
+    max-width: 600px;
+}
+
+.section > a {
+    width: fit-content;
+    border: none;
+    background-color: #1880ff;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.section:nth-child(2) > div {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.section:nth-child(2) > div > section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.section:nth-child(2) > div > section > h2 {
+    font-weight: 500;
+}
+
+.section:nth-child(2) > div > section > div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}

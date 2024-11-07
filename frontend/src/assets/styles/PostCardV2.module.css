@@ -1,0 +1,70 @@
+.container {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container > img {
+    background-color: antiquewhite;
+    width: 100%;
+    padding-bottom: 100%;
+}
+
+.container > div {
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f9f8f9;
+}
+
+.container > div p:nth-last-of-type(2)  {
+    color: #7d777d;
+}
+
+.container > div p:nth-last-of-type(1)  {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+}
+
+.container > div h2  {
+    font-weight: 500;
+    font-size: 21px;
+}
+
+.container > div > div {
+    display: flex;
+    gap: 10px;
+}
+
+.container > div > a {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 10px 10px;
+    border-radius: 10px;
+    width: fit-content;
+    font-size: 15px;
+}
+
+.container > div > a {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 10px 10px;
+    border-radius: 10px;
+    width: fit-content;
+    font-size: 15px;
+    transition: all ease 0.2s;
+}
+
+.container > div > a:hover {
+    background-color: #d6cbd6;
+}
