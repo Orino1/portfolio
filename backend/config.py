@@ -14,3 +14,5 @@ class Config:
         f"mysql://{DB_USERNAME}:{DB_PASSWORD}@localhost:3306/{DB_NAME}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
