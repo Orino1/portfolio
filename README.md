@@ -18,10 +18,10 @@ The Portfolio Project is a full-stack web application designed for web developer
 ## Features
 
 - Admin user authentication with secure password storage.
-- CRUD operations for projects and skills and contact.
+- CRUD operations for projects and skills and posts.
 - Dynamic project listings with detailed descriptions and links.
 - User-friendly interface built with React for a responsive experience.
-- Ability to manage projects/skills/contact dynamically from the admin dashboard.
+- Ability to manage projects, skills, and posts dynamically from the admin dashboard.
 
 ## Technologies
 
@@ -46,7 +46,7 @@ portfolio/
 │   │   ├── auth.py                 # Authentication routes
 │   │   ├── projects.py             # Project management routes
 │   │   ├── skills.py               # Skills management routes
-│   │   └── contact.py              # Contact management routes
+│   │   └── posts.py                # Posts management routes
 │   └── migrations/                 # Database migration files
 │
 ├── frontend/
@@ -54,7 +54,7 @@ portfolio/
 │   │   ├── assets/                 # Folder for images, logos, and other assets
 │   │   │   ├── images/             # Images
 │   │   │   ├── logos/              # Logos
-│   │   │   └── styles/             # Additional styles (if any)
+│   │   │   └── styles/             # Additional styles
 │   │   ├── components/             # Reusable components
 │   │   ├── pages/                  # Page components for routing
 │   │   ├── App.js                  # Main app component
@@ -62,6 +62,7 @@ portfolio/
 │   │   └── apiService.js           # API service for handling HTTP requests
 │   ├── public/                     # Static files for React
 │   └── package.json                # Node.js dependencies
+│
 └── README.md                       # Project documentation
 ```
 
