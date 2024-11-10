@@ -1,0 +1,73 @@
+.container > div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.container > div:nth-of-type(2) > div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.container > div:nth-of-type(2) > div > div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.newLangContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.newLangContainer > div:nth-of-type(1) {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.newLangContainer > div:nth-of-type(1) > button {
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+}
+
+.newLangContainer > div:nth-of-type(1) > button.selected {
+    background-color: #4c04a6;
+    color: rgb(255, 255, 255);
+    border: none;
+}
+
+.infoCard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.infoCard input {
+    padding: 5px 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+}
+
+.infoCard button {
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    background-color: #4c04a6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

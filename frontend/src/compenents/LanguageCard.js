@@ -6,7 +6,7 @@ export default function LanguageCard() {
             <div>
                 <div className={styles.cardHeader}>
                     <h2>
-                        <i className="fa-brands fa-python"></i> Python
+                        <i class="fa-solid fa-code"></i> Python
                     </h2>
                 </div>
                 <div className={styles.cardContent}>

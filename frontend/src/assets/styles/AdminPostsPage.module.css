@@ -1,0 +1,68 @@
+.homeContainer > div:nth-of-type(2) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+
+
+.newPostContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.newPostContainer form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    gap: 20px;
+}
+
+.newPostContainer form h1 {
+    font-weight: 500;
+}
+
+.newPostContainer form > div {
+    display: flex;
+    gap: 10px;
+}
+
+.newPostContainer form > div > div {
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #f9f8f9;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+
+.newPostContainer form > div > div.selected {
+    background-color: #4c04a6;
+    color: white;
+}
+
+.newPostContainer form input,
+.newPostContainer form textarea {
+    padding: 20px 20px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-shadow: 0px 0px 5px 2px rgba(186, 186, 186, 0.577);
+    transition: all ease 0.2s;
+}
+
+.newPostContainer form textarea {
+    height: 400px;
+}
+
+.newPostContainer form button {
+    padding: 20px 20px;
+    color: white;
+    background-color: #4c04a6;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    resize: none;
+}
