@@ -30,13 +30,13 @@ def create_app():
             TechnologySections,
         )
 
-        # imoprting blueprints
-        from .routes import auth_bp, posts_bp, projects_bp, skills_bp
+    # imoprting blueprints
+    from .routes import auth_bp, posts_bp, projects_bp, skills_bp
 
-        # registering blueprints
-        app.register_blueprint(auth_bp, url_prefix="/api/auth")
-        app.register_blueprint(projects_bp, url_prefix="/api/projects")
-        app.register_blueprint(skills_bp, url_prefix="/api/skills")
-        app.register_blueprint(posts_bp, url_prefix="/api/posts")
+    # registering blueprints
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
+    app.register_blueprint(projects_bp, url_prefix="/api/projects")
+    app.register_blueprint(skills_bp, url_prefix="/api/skills")
+    app.register_blueprint(posts_bp, url_prefix="/api/posts")
 
     return app
