@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Blueprint, Flask
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 
@@ -19,16 +19,8 @@ def create_app():
     with app.app_context():
 
         # importing models for migrations
-        from .models import (
-            Admin,
-            Frameworks,
-            Languages,
-            Orms,
-            Posts,
-            Projects,
-            Technologies,
-            TechnologySections,
-        )
+        from .models import (Admin, Frameworks, Languages, Orms, Posts,
+                             Projects, Technologies, TechnologySections)
 
     # imoprting blueprints
     from .routes import auth_bp, posts_bp, projects_bp, skills_bp
