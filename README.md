@@ -36,18 +36,19 @@ The Portfolio Project is a full-stack web application designed for web developer
 portfolio/
 │
 ├── backend/
-│   ├── __init__.py                 # Initializing the main package
-│   ├── app.py                      # Entry point for our application
-│   ├── config.py                   # Configuration settings
-│   ├── models.py                   # Database models
-│   ├── requirements.txt            # Dependencies
-│   ├── routes/                     # API routes
-│   │   ├── __init__.py             # Initializing the routes
-│   │   ├── auth.py                 # Authentication routes
-│   │   ├── projects.py             # Project management routes
-│   │   ├── skills.py               # Skills management routes
-│   │   └── posts.py                # Posts management routes
-│   └── migrations/                 # Database migration files
+│   ├── src/
+│   │   ├── __init__.py             # Initializing the main package
+│   │   ├── config.py               # Configuration settings
+│   │   ├── models.py               # Database models
+│   │   ├── requirements.txt        # Dependencies
+│   │   ├── routes/                 # API routes
+│   │   │   ├── __init__.py         # Blueprints are imported here
+│   │   │   ├── auth.py             # Authentication routes
+│   │   │   ├── projects.py         # Project management routes
+│   │   │   ├── skills.py           # Skills management routes
+│   │   │   └── posts.py            # Posts management routes
+│   │   └── migrations/             # Database migration files
+│   └── run.py                      # Entry point for development purposes
 │
 ├── frontend/
 │   ├── src/                        # React source files
