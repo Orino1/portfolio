@@ -20,6 +20,12 @@ class Admin(db.Model):
     password = db.Column(db.String(255), nullable=False)
 
 
+class Thumbnail(db.Model):
+    __tablename__ = "thumbnails"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    file = db.Column(db.String(255), nullable=False)
+
+
 class Posts(db.Model):
     __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -27,11 +33,21 @@ class Posts(db.Model):
     listed = db.Column(db.Boolean, default=True)
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    thumbnail = db.Column(db.String(255), nullable=False)
+    thumbnail_id = db.Column(db.Integer, db.ForeignKey("thumbnails.id"), nullable=False)
     created_at = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "public_id": self.public_id,
+            "listed": self.listed,
+            "title": self.title,
+            "content": self.content,
+            "thumbnail": self.thumbnail,
+            "created_at": self.created_at,
+        }
 
 class Languages(db.Model):
     __tablename__ = "languages"

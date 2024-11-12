@@ -20,7 +20,7 @@ def create_app():
 
         # importing models for migrations
         from .models import (Admin, Frameworks, Languages, Orms, Posts,
-                             Projects, Technologies, TechnologySections)
+                             Projects, Technologies, TechnologySections, Thumbnail)
 
     # imoprting blueprints
     from .routes import auth_bp, posts_bp, projects_bp, skills_bp
