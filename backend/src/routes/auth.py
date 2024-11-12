@@ -49,7 +49,7 @@ def login():
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@auth_bp.route("/refresh", methods=["POST"])
+@auth_bp.route("/refresh", methods=["GET"])
 @jwt_required(refresh=True)
 def refresh():
     try:
