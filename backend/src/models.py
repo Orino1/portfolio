@@ -38,17 +38,6 @@ class Posts(db.Model):
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "public_id": self.public_id,
-            "listed": self.listed,
-            "title": self.title,
-            "content": self.content,
-            "thumbnail": self.thumbnail,
-            "created_at": self.created_at,
-        }
-
 class Languages(db.Model):
     __tablename__ = "languages"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -75,7 +64,7 @@ class Technologies(db.Model):
     name = db.Column(db.String(50), nullable=False)
 
 
-class TechnologySections:
+class TechnologySections(db.Model):
     __tablename__ = "technology_sections"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     header = db.Column(db.String(100), nullable=False)
