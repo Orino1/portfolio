@@ -16,3 +16,6 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv("SECRET_KEY")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads/thumbnails')
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
