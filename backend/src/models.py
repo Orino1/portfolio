@@ -115,6 +115,8 @@ class Thumbnail(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     file = db.Column(db.String(255), nullable=False)
 
+    posts = db.relationship("Posts", backref="thumbnails")
+
 
 class Posts(db.Model):
     __tablename__ = "posts"
