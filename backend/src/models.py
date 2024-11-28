@@ -130,7 +130,7 @@ class Posts(db.Model):
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
-    thumbnail = db.relationship("Thumbnail", backref="posts")
+    thumbnail = db.relationship("Thumbnail", overlaps="posts,thumbnails")
 
 
 class Languages(db.Model):
