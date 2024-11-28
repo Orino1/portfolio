@@ -1,11 +1,20 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import (create_access_token, create_refresh_token,
-                                get_jwt_identity, jwt_required)
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token,
+    get_jwt_identity,
+    jwt_required,
+    set_access_cookies,
+    set_refresh_cookies,
+)
 from sqlalchemy.exc import SQLAlchemyError
-from src.models import Admin, db
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from src.config import logger
+from src.models import Admin, db
+
 auth_bp = Blueprint("auth", __name__)
+
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
@@ -24,6 +33,12 @@ def login():
         admin = Admin.query.filter_by(username=username).first()
 
         if not admin:
+            logger.warning(
+                "unsuccessful loggin attempt by username %s and password %s",
+                username,
+                password,
+            )
+
             return jsonify({"msg": "Admin not found"}), 400
 
         if not check_password_hash(admin.password, password):
@@ -31,21 +46,24 @@ def login():
 
         access_token = create_access_token(identity=admin.id)
         refresh_token = create_refresh_token(identity=admin.id)
-        return jsonify(
-            {
-                "access_token": access_token,
-                "refresh_token": refresh_token,
-                "msg": "Login successful.",
-            }
-        )
+
+        response = jsonify({"msg": "Login successful."})
+
+        set_access_cookies(response, access_token)
+        set_refresh_cookies(response, refresh_token)
+
+        logger.info("Admin %s logged in successfully.", admin.username)
+        return response
 
     except SQLAlchemyError as e:
+        logger.error("Database error occurred: %s", e)
         return (
             jsonify({"msg": "An error occurred in the Database. Please try again."}),
             500,
         )
 
     except Exception as e:
+        logger.error("Unexpected error occurred: %s", e)
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
@@ -57,9 +75,14 @@ def refresh():
 
         new_access_token = create_access_token(identity=current_admin)
 
-        return jsonify({"access_token": new_access_token})
+        response = jsonify({"msg": "Access token refreshed succssufully."})
+
+        set_access_cookies(response, new_access_token)
+
+        return response
 
     except Exception as e:
+        logger.error("Unexpected error occurred: %s", e)
         return jsonify({"msg": "An unexpected error occurred"}), 500
 
 
@@ -84,8 +107,10 @@ def change_password():
         return jsonify({"msg": "password changed successfully"})
 
     except SQLAlchemyError as e:
+        logger.error("Database error occurred: %s", e)
         db.session.rollback()
         return jsonify({"msg": "An error occurred while updating the password"}), 500
 
     except Exception as e:
-        return jsonify({"msg": f"An unexpected error occurred{e}"}), 500
+        logger.error("Unexpected error occurred: %s", e)
+        return jsonify({"msg": "An unexpected error occurred"}), 500
