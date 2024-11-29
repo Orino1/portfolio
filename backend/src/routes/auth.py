@@ -114,3 +114,9 @@ def change_password():
     except Exception as e:
         logger.error("Unexpected error occurred: %s", e)
         return jsonify({"msg": "An unexpected error occurred"}), 500
+
+
+@auth_bp.route("/status", methods=["GET"])
+@jwt_required()
+def auth_status():
+    return jsonify({"success": True})
