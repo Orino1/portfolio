@@ -5,8 +5,22 @@ import { Link } from "react-router-dom";
 import LanguageCard from "../compenents/LanguageCard";
 import GeneralSkillCard from "../compenents/GeneralSkillCard";
 import { Helmet } from "react-helmet";
+import { fetchSkills } from "../apiService";
+import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
+import { useState, useEffect } from "react";
 
 export default function About() {
+    const {setGlobalMessage} = useGlobalMessageContext();
+    const [skills, setSkills] = useState(null);
+
+    useEffect(() => {
+        const getSkills = async () => {
+            const data = await fetchSkills(setGlobalMessage);
+            setSkills(data);
+        }
+        getSkills()
+    }, [])
+
     return (
         <MainLayout>
             <Helmet>
@@ -31,25 +45,27 @@ export default function About() {
                         <Link to="/contact">Contact</Link>
                     </div>
                     <div className={`${styles.section} maxSubContainer`}>
-                        <h1>Skills and Technologies</h1>
                         <div>
-                            <section>
-                                <h2>Languages</h2>
-                                <div>
-                                    <LanguageCard></LanguageCard>
-                                    <LanguageCard></LanguageCard>
-                                    <LanguageCard></LanguageCard>
-                                    <LanguageCard></LanguageCard>
-                                </div>
-                            </section>
-                            <section>
-                                <h2>Technologies</h2>
-                                <div>
-                                <GeneralSkillCard></GeneralSkillCard>
-                                <GeneralSkillCard></GeneralSkillCard>
-                                <GeneralSkillCard></GeneralSkillCard>
-                                </div>
-                            </section>
+                            {skills && 
+                                <section>
+                                    <h2>Languages</h2>
+                                    <div>
+                                        {skills.languages.map((language) => (
+                                            <LanguageCard language={language}></LanguageCard>
+                                        ))}
+                                    </div>
+                                </section>
+                            }
+                            {skills && 
+                                <section>
+                                    <h2>Technologies</h2>
+                                    <div>
+                                        {skills.technologies.map((skill) => (
+                                            <GeneralSkillCard skill={skill}></GeneralSkillCard>
+                                        ))}
+                                    </div>
+                                </section>
+                            }
                         </div>
                     </div>
                 </div>

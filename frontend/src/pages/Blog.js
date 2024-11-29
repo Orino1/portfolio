@@ -2,8 +2,25 @@ import styles from "../assets/styles/BlogPage.module.css";
 import MainLayout from "./MainLayout";
 import PostCardV2 from "../compenents/PostCardV2";
 import { Helmet } from "react-helmet";
+import { fetchAllPosts } from "../apiService";
+import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
+import { useState, useEffect } from "react";
 
 export default function Blog() {
+    const [posts, setPosts] = useState(null);
+    const {setGlobalMessage} = useGlobalMessageContext();
+
+    useEffect(() => {
+        const getAllPosts = async () => {
+            const data = await fetchAllPosts(setGlobalMessage);
+            if (data) {
+                setPosts(data.posts);
+            }
+        };
+
+        getAllPosts();
+    }, []);
+
     return (
         <MainLayout>
             <Helmet>
@@ -23,9 +40,9 @@ export default function Blog() {
                         <div>
                             <section>Filter</section>
                             <section>
-                                <PostCardV2></PostCardV2>
-                                <PostCardV2></PostCardV2>
-                                <PostCardV2></PostCardV2>
+                                {posts && posts.map(post => (
+                                    <PostCardV2 post={post}></PostCardV2>
+                                ))}
                             </section>
                         </div>
                     </div>

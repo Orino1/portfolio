@@ -2,10 +2,27 @@ import MainLayout from "./MainLayout";
 import styels from "../assets/styles/HomePage.module.css";
 import "../assets/styles/styles.css";
 import { Link } from "react-router-dom";
-import PostCard from "../compenents/PostCard";
+import PostCardV2 from "../compenents/PostCardV2";
 import { Helmet } from "react-helmet";
+import { useState, useEffect } from "react";
+import { fetchLastestPosts } from "../apiService";
+import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
 
 export default function Home() {
+    const [posts, setPosts] = useState([]);
+    const {setGlobalMessage} = useGlobalMessageContext();
+
+    useEffect(() => {
+        const posts = async () => {
+            const data = await fetchLastestPosts(setGlobalMessage);
+            if (data) {
+                setPosts(data.posts);
+            }
+        };
+
+        posts();
+    }, []);
+
     return (
         <MainLayout>
             <Helmet>
@@ -51,14 +68,14 @@ export default function Home() {
                                 Latest <span>Posts.</span>
                             </h1>
                         </div>
-                        <Link>
+                        <Link to="/blog">
                             View All <i className="fa-solid fa-arrow-right"></i>
                         </Link>
                     </div>
                     <div>
-                        <PostCard></PostCard>
-                        <PostCard></PostCard>
-                        <PostCard></PostCard>
+                        {posts.map((post, index) => (
+                            <PostCardV2 key={index} post={post} />
+                        ))}
                     </div>
                 </div>
             </div>

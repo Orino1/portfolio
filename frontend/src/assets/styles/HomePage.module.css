@@ -143,5 +143,15 @@
         max-width: fit-content;
         padding: 50px 10px;
     }
+    
+    .news > div > div:nth-child(2) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
 }
 
+@media (max-width: 357px) {
+    .news > div > div:nth-child(2) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
