@@ -1,0 +1,22 @@
+.msg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    max-width: 200px;
+    border: 1px solid rgba(98, 98, 98, 0.276);
+}
+
+.success {
+    background-color: rgb(74, 156, 106);
+}
+
+.error {
+    background-color: tomato;
+}

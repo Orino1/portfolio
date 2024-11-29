@@ -1,14 +1,16 @@
 import styles from "../assets/styles/AdminLayout.module.css";
 import NavBar from "../compenents/Header";
-import Footer from "../compenents/Footer";
+import GlobalMessage from "../compenents/GlobalMessage";
+import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
 
-export default function AdminLayout({children}) {
+export default function AdminLayout({ children }) {
+    const { gobalMessage } = useGlobalMessageContext();
+
     return (
         <>
+            {gobalMessage && <GlobalMessage></GlobalMessage>}
             <NavBar></NavBar>
-            <div className={styles.container}>
-                {children}
-            </div>
+            <div className={styles.container}>{children}</div>
         </>
     );
 }
