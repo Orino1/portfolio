@@ -4,11 +4,11 @@ import GlobalMessage from "../compenents/GlobalMessage";
 import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
 
 export default function AdminLayout({ children }) {
-    const { gobalMessage } = useGlobalMessageContext();
+    const { globalMessage } = useGlobalMessageContext();
 
     return (
         <>
-            {gobalMessage && <GlobalMessage></GlobalMessage>}
+            {globalMessage && <GlobalMessage></GlobalMessage>}
             <NavBar></NavBar>
             <div className={styles.container}>{children}</div>
         </>

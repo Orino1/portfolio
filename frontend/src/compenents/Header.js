@@ -39,11 +39,16 @@ export default function Header() {
                     <span></span>
                 </button>
                 {openMenu && <Menu handleClose={setOpenMenu}></Menu>}
-                <Link className={styles.logo} to="/">ORINO</Link>
+                <Link className={styles.logo} to="/">
+                    ORINO
+                </Link>
             </section>
-            <section>hello</section>
+            <section></section>
             <section>
-                <button onClick={handleToggle} className={styles[togglePosition]}>
+                <button
+                    onClick={handleToggle}
+                    className={styles[togglePosition]}
+                >
                     <div>
                         <i className="fa-solid fa-sun"></i>
                         <i className="fa-solid fa-cloud"></i>
@@ -64,33 +69,28 @@ function Menu({ handleClose }) {
                     <p>HOME</p>
                     <span>01</span>
                 </Link>
-                <Link onClick={() => handleClose((prev) => !prev)} to="#">
-                    <p>PORTFOLIO</p>
-                    <p>PORTFOLIO</p>
+                <Link
+                    onClick={() => handleClose((prev) => !prev)}
+                    to="/contact"
+                >
+                    <p>CONTACT</p>
+                    <p>CONTACT</p>
                     <span>02</span>
-                </Link>
-                <Link onClick={() => handleClose((prev) => !prev)} to="/about">
-                    <p>ABOUT</p>
-                    <p>ABOUT</p>
-                    <span>03</span>
-                </Link>
-                <Link onClick={() => handleClose((prev) => !prev)} to="/contact">
-                    <p>CONTACT</p>
-                    <p>CONTACT</p>
-                    <span>04</span>
-                </Link>
-                <Link onClick={() => handleClose((prev) => !prev)} to="/blog">
-                    <p>BLOG</p>
-                    <p>BLOG</p>
-                    <span>05</span>
                 </Link>
             </section>
             <section>
                 <section>
                     <h4>Get In Touch</h4>
-                    <p>El jadida, casablanca-state, Morocco.</p>
-                    <p>soon@orino.me</p>
-                    <p>Ph: +212 06 00 00 00 00</p>
+                    <p>
+                        Currently based in El Jadida, Casablanca Province,
+                        Morocco.
+                    </p>
+                    <p>
+                        Email: <a href="mailto:contact@orino.me">contact@orino.me</a>
+                    </p>
+                    <p>
+                        Phone/WhatsApp: <a href="tel:+212600000000">+212 600 000 000</a>
+                    </p>
                 </section>
             </section>
         </div>

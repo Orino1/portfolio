@@ -75,6 +75,12 @@
     color: black;
 }
 
+.footer > div > section:nth-child(1) > div:nth-of-type(3) a {
+    text-decoration: none;
+    margin-left: 10px;
+    color: #5e30b8;
+}
+
 .newsLetterForm {
     display: flex;
     flex-direction: column;

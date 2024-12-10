@@ -1,15 +1,41 @@
 import AdminLayout from "./AdminLayout";
 import styles from "../assets/styles/AdminLoginPage.module.css";
-import { useState } from "react";
-//
+import { useState, useEffect } from "react";
+import { useAuthContext } from "../contexts/AuthContext";
+import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
+import { login } from "../apiService";
+import { useNavigate } from "react-router-dom";
+
 
 export default function AdminLogin() {
     const [success, setSuccess] = useState(false);
-    const [err, setErr] = useState(false);
+    const [username, setUsernmae] = useState("");
+    const [password, setPassword] = useState("");
+    const { isAdmin, setIsAdmin } = useAuthContext();
+    const { setGlobalMessage } = useGlobalMessageContext();
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleClick = (e) => {
+    useEffect(() => {
+        if (isAdmin) {
+            navigate("/admin/");
+        }
+    }, [isAdmin]);
+
+    const handleClick = async (e) => {
         e.preventDefault();
-        setSuccess(true);
+
+        const loggedin = await login(
+            { username: username, password: password },
+            setGlobalMessage
+        );
+
+        if (loggedin) {
+            setSuccess(true)
+            setTimeout(() => {
+                setIsAdmin(true);
+            }, 600);
+        }
     };
 
     return (
@@ -21,8 +47,16 @@ export default function AdminLogin() {
                 >
                     <h3>Welcom back</h3>
                     <div>
-                        <input placeholder="username" type="text"></input>
-                        <input placeholder="password" type="password"></input>
+                        <input
+                            onChange={(e) => setUsernmae(e.target.value)}
+                            placeholder="username"
+                            type="text"
+                        ></input>
+                        <input
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="password"
+                            type="password"
+                        ></input>
                     </div>
                     <button className={success && styles.success}>Login</button>
                 </form>

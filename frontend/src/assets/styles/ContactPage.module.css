@@ -18,7 +18,7 @@
     max-width: 600px;
 }
 
-.header > div button {
+.header > div a {
     width: fit-content;
     border: none;
     background-color: #4c04a6;
@@ -29,65 +29,56 @@
     font-weight: 500;
     letter-spacing: 1px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .content {
-    display: flex;
+    background-color: #2f0166;
 }
 
-.content > div {
-    padding-bottom: 30%;
-    width: 50%;
-    background-color: #d5d2cf;
-}
-
-.content > div:nth-child(2) {
-    display: flex;
-    align-items: start;
-    justify-content: space-evenly;
-    background-color: #150333;
-    padding: 70px 60px;
-    gap: 40px;
-}
-
-.content > div:nth-child(2) > div {
-    width: fit-content;
-    max-width: 200px;
-    color: white;
-    line-height: 23px;
-}
-
-.content > div:nth-child(2) > div > div:nth-child(1) {
-    background-color: #281944;
-    border-radius: 50%;
-    color: white;
+.subContent {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 50px;
-    width: 50px;
-    margin-bottom: 20px;
+    gap: 100px;
+    padding: 50px 20px;
 }
 
-.content > div:nth-child(2) > div > div:nth-child(1) i {
+.subContent > div {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.subContent > div i {
     font-size: 20px;
 }
 
-.content > div:nth-child(2) > div h2 {
-    font-size: 16px;
-}
-
-.content > div:nth-child(2) > div h3:nth-child(3),
-.content > div:nth-child(2) > div h3:nth-child(4) {
-    font-size: 16px;
+.subContent > div h3 {
     font-weight: 400;
+    font-size: 18px;
 }
 
-.content > div:nth-child(2) > div h3:nth-child(2) {
-    font-weight: 400;
-    margin-bottom: 20px;
+.subContent > div p {
+    font-size: 15px;
 }
 
-.content > div:nth-child(2) > div p {
-    color: gray;
+.subContent > div a {
+    font-size: 17px;
+    text-decoration: none;
+    color: rgb(60, 164, 255);
+}
+
+@media (max-width: 428px) {
+    .subContent > div {
+        width: fit-content;
+        width: 200px;
+    }
+
+    .subContent {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 40px 0px;
+    }
 }

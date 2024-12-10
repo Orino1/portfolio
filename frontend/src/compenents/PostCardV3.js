@@ -2,25 +2,55 @@ import styles from "../assets/styles/PostCardV2.module.css";
 import "../assets/styles/styles.css";
 import Tag from "./Tag";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
+import { togglePostListing, deletePost } from "../apiService";
 
-export default function PostCardV3() {
+export default function PostCardV3({ post, handleDelete, handleUpdate }) {
     const [unlisted, setUnlisted] = useState(false);
     const [toBeDeleted, setToBeDeleted] = useState(false);
+    const { setGlobalMessage } = useGlobalMessageContext();
+
+    const formattedDate = new Date(post.created_at).toLocaleDateString(
+        "en-US",
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+        }
+    );
+
+    useEffect(() => {
+        const checkListed = () => {
+            setUnlisted(!post.listed);
+        };
+
+        checkListed();
+    }, []);
+
+    const handleListingToggle = async () => {
+        const success = await togglePostListing(post.id, setGlobalMessage);
+
+        if (success) {
+            setUnlisted((prev) => !prev);
+        }
+    };
+
+    const handleDeletion = async () => {
+        const success = await deletePost(post.id, setGlobalMessage);
+
+        if (success) {
+            handleDelete(post.id);
+        }
+    };
 
     return (
         <div className={`${styles.container} ${unlisted && styles.unlisted}`}>
             <img></img>
             <div>
-                <p>juillet 5, 2020 4 min read</p>
-                <h2>
-                    The Highly Creative UI/UX Workflow from a Silicon Valley.
-                </h2>
-                <p>
-                    Using a Query A CSS pseudo-class is a keyword added to a
-                    thing that will always be greate even togh you cannot see it
-                    so what what we think abuot it
-                </p>
+                <p>{formattedDate}</p>
+                <h2>{post.title}</h2>
+                <p>{post.content}</p>
                 <div>
                     <Tag tag="Digital"></Tag>
                     <Tag tag="Marketing"></Tag>
@@ -29,24 +59,34 @@ export default function PostCardV3() {
                     Read more <i class="fa-solid fa-arrow-right"></i>
                 </Link>
             </div>
-            <div
-                className={styles.ballContainer}
-                onClick={() => setUnlisted((prev) => !prev)}
-            >
+            <div className={styles.ballContainer} onClick={handleListingToggle}>
                 <div className={unlisted && styles.unlisted}></div>
                 <label>{unlisted ? "Re-list" : "Un-list"}</label>
             </div>
-            <i className="fa-solid fa-trash" onClick={() => setToBeDeleted(prev => !prev)}></i>
+            <i
+                className="fa-solid fa-trash"
+                onClick={() => setToBeDeleted((prev) => !prev)}
+            ></i>
             <i className="fa-solid fa-trash"></i>
-            {toBeDeleted && <div className={styles.deleteDialog}>
-                <div>
-                    <p>Deleted posts are permanently lost and cannot be recovered.</p>
+            <i className="fa-regular fa-pen-to-square" onClick={() => handleUpdate(post)}></i>
+            {toBeDeleted && (
+                <div className={styles.deleteDialog}>
                     <div>
-                        <button onClick={() => setToBeDeleted(prev => !prev)}>Cancel</button>
-                        <button>Confirm</button>
+                        <p>
+                            Deleted posts are permanently lost and cannot be
+                            recovered.
+                        </p>
+                        <div>
+                            <button
+                                onClick={() => setToBeDeleted((prev) => !prev)}
+                            >
+                                Cancel
+                            </button>
+                            <button onClick={() => handleDelete(post.id)}>Confirm</button>
+                        </div>
                     </div>
                 </div>
-            </div>}
+            )}
         </div>
     );
 }

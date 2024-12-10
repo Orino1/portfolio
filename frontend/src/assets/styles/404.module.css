@@ -1,0 +1,30 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding-top: 70px;
+
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.container h1 {
+    font-weight: 500;
+}
+
+.container a {
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: rgb(33, 129, 239);
+    color: white;
+    font-size: 15px;
+}

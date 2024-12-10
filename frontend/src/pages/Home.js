@@ -1,26 +1,38 @@
 import MainLayout from "./MainLayout";
 import styels from "../assets/styles/HomePage.module.css";
 import "../assets/styles/styles.css";
-import { Link } from "react-router-dom";
-import PostCardV2 from "../compenents/PostCardV2";
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
-import { fetchLastestPosts } from "../apiService";
+import { fetchAllProjects, fetchSkills } from "../apiService";
 import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
+import ProjectCardV1 from "../compenents/ProjectCardV1";
+import LanguageCard from "../compenents/LanguageCard";
+import GeneralSkillCard from "../compenents/GeneralSkillCard";
+import Banner from "../assets/images/banner.svg";
 
 export default function Home() {
-    const [posts, setPosts] = useState([]);
-    const {setGlobalMessage} = useGlobalMessageContext();
+    const { setGlobalMessage } = useGlobalMessageContext();
+    const [projects, setProjects] = useState([]);
+    const [skills, setSkills] = useState(null);
 
     useEffect(() => {
-        const posts = async () => {
-            const data = await fetchLastestPosts(setGlobalMessage);
+        const getProjects = async () => {
+            const data = await fetchAllProjects(setGlobalMessage);
+
             if (data) {
-                setPosts(data.posts);
+                setProjects(data.projects);
             }
         };
 
-        posts();
+        getProjects();
+    }, []);
+
+    useEffect(() => {
+        const getSkills = async () => {
+            const data = await fetchSkills(setGlobalMessage);
+            setSkills(data);
+        };
+        getSkills();
     }, []);
 
     return (
@@ -29,56 +41,108 @@ export default function Home() {
                 <title>Home</title>
             </Helmet>
             <div className={styels.main}>
-                <section></section>
+                <section>
+                    <img src={Banner} />
+                </section>
                 <section>
                     <div>
                         <div>
                             <p>MOHAMMED ELAOUJA</p>
                             <h1>
-                                Building Solutions, One Line of Code at a Time
+                                Building Solutions, for Your Needs
                                 <span>.</span>
                             </h1>
                         </div>
                         <p>
-                            With a focus on creating functional, responsive
-                            applications, my work centers on delivering
-                            straightforward solutions that address real-world
-                            needs. A solid understanding of modern web
-                            technologies allows me to contribute thoughtfully
-                            within collaborative teams and adapt to project
-                            requirements.
+                            Having worked across a range of projects, including
+                            roles such as a software quality tester and a former
+                            board repairman, I bring a diverse skill set with a
+                            strong focus on troubleshooting and problem-solving.
+                            My experience in quality assurance ensures that
+                            every project is delivered with the highest
+                            standards of reliability and performance. With
+                            expertise in both front-end and back-end
+                            development, I focus on crafting seamless user
+                            experiences while maintaining efficiency and
+                            creativity. Based in Morocco, I consistently strive
+                            for precision and alignment with both client
+                            objectives and user needs.
                         </p>
                     </div>
                 </section>
                 <section>
-                    Having worked across front-end and back-end development,
-                    including JavaScript and React, my experience has emphasized
-                    building user experiences that balance creativity and
-                    efficiency. Based in Morocco, I approach each project with
-                    attention to quality, aiming to write code that aligns with
-                    both client goals and user needs.
+                    Building responsive applications that solve real-world
+                    problems, with the ability to integrate into teams using a
+                    diverse range of technologies and stacks to deliver
+                    effective solutions.
                 </section>
             </div>
-            <div className={`${styels.news} maxMainContainer`}>
-                <div className="maxSubContainer">
-                    <div>
+            {projects && projects.length > 0 ? (
+                <div className={`${styels.news} maxMainContainer`}>
+                    <div className="maxSubContainer">
                         <div>
-                            <p>FROM THE BLOG</p>
-                            <h1>
-                                Latest <span>Posts.</span>
-                            </h1>
+                            <div>
+                                <p></p>
+                                <h1>
+                                    Latest <span>Projects.</span>
+                                </h1>
+                            </div>
                         </div>
-                        <Link to="/blog">
-                            View All <i className="fa-solid fa-arrow-right"></i>
-                        </Link>
-                    </div>
-                    <div>
-                        {posts.map((post, index) => (
-                            <PostCardV2 key={index} post={post} />
-                        ))}
+                        <div>
+                            {projects.map((project) => (
+                                <ProjectCardV1
+                                    key={project.id}
+                                    project={project}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            ) : null}
+
+            {skills && skills.languages && (
+                <div
+                    className={`${styels.news} ${styels.languages} maxMainContainer`}
+                >
+                    <div className="maxSubContainer">
+                        <div>
+                            <div>
+                                <p></p>
+                                <h1>
+                                    Programming <span>languages.</span>
+                                </h1>
+                            </div>
+                        </div>
+                        <div>
+                            {skills.languages.map((language) => (
+                                <LanguageCard
+                                    key={language.id}
+                                    language={language}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
+            {skills && skills.technologies && (
+                <div className={`${styels.news} maxMainContainer`}>
+                    <div className="maxSubContainer">
+                        <div>
+                            <div>
+                                <p></p>
+                                <h1>
+                                    Other <span>technologies.</span>
+                                </h1>
+                            </div>
+                        </div>
+                        <div>
+                            {skills.technologies.map((tech) => (
+                                <GeneralSkillCard key={tech.id} skill={tech} />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </MainLayout>
     );
 }

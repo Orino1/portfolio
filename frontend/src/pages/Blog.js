@@ -2,7 +2,7 @@ import styles from "../assets/styles/BlogPage.module.css";
 import MainLayout from "./MainLayout";
 import PostCardV2 from "../compenents/PostCardV2";
 import { Helmet } from "react-helmet";
-import { fetchAllPosts } from "../apiService";
+import { fetchAllListedPosts } from "../apiService";
 import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
 import { useState, useEffect } from "react";
 
@@ -12,7 +12,7 @@ export default function Blog() {
 
     useEffect(() => {
         const getAllPosts = async () => {
-            const data = await fetchAllPosts(setGlobalMessage);
+            const data = await fetchAllListedPosts(setGlobalMessage);
             if (data) {
                 setPosts(data.posts);
             }

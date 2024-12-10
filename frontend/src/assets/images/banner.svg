@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" viewBox="0 0 1080 1080">
+<desc>Created with Fabric.js 5.2.4</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 540 540)" id="bb3696e6-ce21-4460-bbc3-776ebfd4c54b">
+</g>
+<g transform="matrix(1 0 0 1 540 540)" id="856f28b9-9ee8-497d-a9ee-ba9b40bf2aae">
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke" x="-540" y="-540" rx="0" ry="0" width="1080" height="1080"/>
+</g>
+<g transform="matrix(14.29 0 0 14.29 540 518.12)" id="afe99f5d-b1d7-467a-95ef-0cabc797dd8c">
+<rect style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(43,33,59); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" x="-33.085" y="-33.085" rx="0" ry="0" width="66.17" height="66.17"/>
+</g>
+<g transform="matrix(0.58 0 0 0.58 108.09 87.38)" id="205c51ba-a495-4fd1-8f38-0bfa97c8c6db">
+<circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(253,94,79); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" cx="0" cy="0" r="35"/>
+</g>
+<g transform="matrix(0 0 0 0 0 0)">
+<g style="">
+</g>
+</g>
+<g transform="matrix(0.58 0 0 0.58 168.39 88.5)" id="205c51ba-a495-4fd1-8f38-0bfa97c8c6db">
+<circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,180,45); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" cx="0" cy="0" r="35"/>
+</g>
+<g transform="matrix(0.58 0 0 0.58 228.69 89.62)" id="205c51ba-a495-4fd1-8f38-0bfa97c8c6db">
+<circle style="stroke: rgb(0,0,0); stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(46,196,62); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" cx="0" cy="0" r="35"/>
+</g>
+<g transform="matrix(0 0 0 0 0 0)">
+<g style="">
+</g>
+</g>
+<g transform="matrix(0 0 0 0 0 0)">
+<g style="">
+</g>
+</g>
+<g transform="matrix(NaN NaN NaN NaN 0 0)">
+<g style="">
+</g>
+</g>
+<g transform="matrix(1 0 0 1 436.37 226.86)" style="" id="114e6da4-a693-41b5-9fa8-17371a205696">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,180,45); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-256.28" y="12.57" style="white-space: pre; ">def </tspan><tspan x="-191.76" y="12.57" style="fill: rgb(163,210,214); white-space: pre; ">proccess ( </tspan><tspan x="-10.84" y="12.57" style="stroke-width: 1; font-family: 'Lato'; font-size: 40px; font-style: normal; font-weight: 400; fill: rgb(238,186,43); ">requirements</tspan><tspan x="226.48" y="12.57" style="fill: rgb(163,210,214); white-space: pre; "> ):</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 589 321.54)" style="" id="1afb0482-a4dd-4721-9454-cf52be9b7bda">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(163,210,214); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-336.58" y="12.57" style="white-space: pre; ">features </tspan><tspan x="-182.54" y="12.57" style="fill: rgb(238,186,43); ">=</tspan><tspan x="-159.34" y="12.57" style="white-space: pre; "> </tspan><tspan x="-151.62" y="12.57" style="stroke-width: 1; font-family: 'Lato'; font-size: 40px; font-style: normal; font-weight: 400; fill: rgb(238,186,43); ">requirements</tspan><tspan x="85.7" y="12.57">.get_features()</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 502.03 392.55)" style="" id="6b4d40b3-8fc3-4d64-968a-54764ae198e0">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(163,210,214); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-248.74" y="12.57" style="white-space: pre; ">infra </tspan><tspan x="-159.42" y="12.57" style="fill: rgb(238,186,43); ">=</tspan><tspan x="-136.22" y="12.57" style="white-space: pre; "> </tspan><tspan x="-128.5" y="12.57" style="fill: rgb(238,186,43); ">Infrastructure</tspan><tspan x="118.7" y="12.57">.setup()</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 555.29 463.57)" style="" id="6e1ae881-90e6-4318-a732-6efaf2888f5f">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(163,210,214); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-300.84" y="12.57" style="white-space: pre; ">backend </tspan><tspan x="-146.48" y="12.57" style="fill: rgb(238,186,43); ">=</tspan><tspan x="-123.28" y="12.57" style="white-space: pre; "> </tspan><tspan x="-115.56" y="12.57" style="fill: rgb(238,186,43); ">Backend</tspan><tspan x="34.6" y="12.57">.build(features)</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 564.17 540)" style="" id="545da2f3-af1d-4e07-aa3f-c8a520159e63">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(238,186,43); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-311.14" y="12.57">frontend = Frontend.</tspan><tspan x="53.06" y="12.57" style="fill: rgb(163,210,214); ">build(backend)</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 577.06 654.29)" style="" id="138108ae-6dfe-427b-b479-db1bca68a851">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(163,210,214); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-324.58" y="-21.33" style="white-space: pre; ">project </tspan><tspan x="-191.7" y="-21.33" style="fill: rgb(238,186,43); ">=</tspan><tspan x="-168.5" y="-21.33" style="white-space: pre; "> </tspan><tspan x="-160.78" y="-21.33" style="fill: rgb(238,186,43); ">Project()</tspan><tspan x="-9.26" y="-21.33">.assemble(infra, db,</tspan><tspan x="-164.7" y="46.47">backend, frontend)</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 371.84 780.17)" style="" id="60e40123-9d21-44fe-866a-ced832b82c39">
+		<text xml:space="preserve" font-family="Lato" font-size="40" font-style="normal" font-weight="400" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(253,94,79); fill-rule: nonzero; opacity: 1; white-space: pre;"><tspan x="-122.74" y="12.57" style="white-space: pre; ">return </tspan><tspan x="-2.42" y="12.57" style="fill: rgb(163,210,214); ">project</tspan></text>
+</g>
+</svg>

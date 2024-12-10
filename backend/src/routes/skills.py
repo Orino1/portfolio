@@ -12,6 +12,10 @@ from src.models import (
     ProjectVariantTechnology,
     Technologies,
     TechnologySections,
+    ProjectVariantLanguageOrm,
+    ProjectVariantLanguageFramework,
+    Libraries,
+    ProjectVariantLanguageLib,
     db,
 )
 from src.validators import (
@@ -40,6 +44,10 @@ def get_skills():
                     {"id": framework.id, "name": framework.name}
                     for framework in language.frameworks
                 ],
+                "libraries": [
+                    {"id": lib.id, "name": lib.name}
+                    for lib in language.libraries
+                ]
             }
             for language in languages
         ]
@@ -204,6 +212,11 @@ def add_language():
                 new_framework = Frameworks(name=framework, language_id=new_language.id)
                 db.session.add(new_framework)
 
+        if data.get("libraries"):
+            for lib in data["libraries"]:
+                new_lib = Libraries(name=lib, language_id=new_language.id)
+                db.session.add(new_lib)
+
         db.session.commit()
 
         return jsonify({"msg": "Language added successfully."})
@@ -224,14 +237,14 @@ def add_language():
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/techonolgy/<int:id>", methods=["PATCH"])
+@skills_bp.route("/techonolgy/<int:tech_id>", methods=["PATCH"])
 @jwt_required()
-def edit_techonolgy(id):
+def update_techonolgy(tech_id):
     try:
         techonolgy_schema = TechnologyUpdateSchema()
         data = techonolgy_schema.load(request.get_json())
 
-        technology = Technologies.query.filter_by(id=data["id"])
+        technology = Technologies.query.filter_by(id=tech_id).first()
 
         if not technology:
             return jsonify({"msg": "Techonolgy not found."}), 404
@@ -251,7 +264,7 @@ def edit_techonolgy(id):
 
         if data.get("old_sections"):
             for section in data["old_sections"]:
-                old_section = TechnologySections.query.filter_by(id=section["id"])
+                old_section = TechnologySections.query.filter_by(id=section["id"]).first()
 
                 if not old_section:
                     return (
@@ -262,6 +275,16 @@ def edit_techonolgy(id):
                     old_section.header = section["header"]
                 if section.get("content"):
                     old_section.content = section["content"]
+
+        if data.get("delete_sections"):
+            if len(data["delete_sections"]) == len(technology.sections) + len(data.get("new_sections", [])):
+                return jsonify({"msg": "Cannot delete all sections for the technology."}), 400
+
+            for section_id in data["delete_sections"]:
+                section_to_delete = TechnologySections.query.filter_by(id=section_id).first()
+                if not section_to_delete:
+                    return jsonify({"msg": f"Section with id {section_id} not found."}), 400
+                db.session.delete(section_to_delete)
 
         db.session.commit()
 
@@ -283,14 +306,14 @@ def edit_techonolgy(id):
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/language/<int:id>", methods=["PATCH"])
+@skills_bp.route("/language/<int:lang_id>", methods=["PATCH"])
 @jwt_required()
-def edit_language(id):
+def update_language(lang_id):
     try:
         language_schema = LanguageUpdateSchema()
         data = language_schema.load(request.get_json())
 
-        language = Languages.query.filter_by(id=data["id"])
+        language = Languages.query.filter_by(id=lang_id).first()
 
         if not language:
             return jsonify({"msg": "Language not found."}), 404
@@ -302,13 +325,16 @@ def edit_language(id):
             for orm in data["new_orms"]:
                 new_orm = Orms(name=orm, language_id=language.id)
                 db.session.add(new_orm)
-                db.session.flush()
 
         if data.get("new_frameworks"):
             for framework in data["new_frameworks"]:
                 new_framework = Frameworks(name=framework, language_id=language.id)
                 db.session.add(new_framework)
-                db.session.flush()
+
+        if data.get("new_libraries"):
+            for lib in data["new_libraries"]:
+                new_lib = Libraries(name=lib, language_id=language.id)
+                db.session.add(new_lib)
 
         if data.get("old_orm"):
             for orm in data["old_orms"]:
@@ -319,7 +345,7 @@ def edit_language(id):
 
                 old_orm.name = orm["name"]
 
-        if data.get("old_orm"):
+        if data.get("old_frameworks"):
             for framwork in data["old_frameworks"]:
                 old_framwork = Frameworks.query.filter_by(id=framwork["id"])
 
@@ -331,208 +357,45 @@ def edit_language(id):
 
                 old_framwork.name = framework["name"]
 
+        if data.get("old_libraries"):
+            for lib in data["old_libraries"]:
+                old_lib = Frameworks.query.filter_by(id=lib["id"])
+
+                if not old_lib:
+                    return (
+                        jsonify({"msg": f"Library with id {lib['id']} not found."}),
+                        404,
+                    )
+
+                old_lib.name = lib["name"]
+
+        if data.get("delete_orms"):
+            for orm_id in data["delete_orms"]:
+                linked_project = ProjectVariantLanguageOrm.query.filter_by(orm_id=orm_id).first()
+                if linked_project:
+                    return jsonify({"msg": "Cannot delete an orm wich is linked to a project"}), 400
+                orm = Orms.query.filter_by(id=orm_id).first()
+                db.session.delete(orm)
+        
+        if data.get("delete_frameworks"):
+            for framework_id in data["delete_frameworks"]:
+                linked_project = ProjectVariantLanguageFramework.query.filter_by(framework_id=framework_id).first()
+                if linked_project:
+                    return jsonify({"msg": "Cannot delete a framework wich is linked to a project"}), 400
+                framework = Frameworks.query.filter_by(id=framework_id).first()
+                db.session.delete(framework)
+
+        if data.get("delete_libraries"):
+            for lib_id in data["delete_libraries"]:
+                linked_project = ProjectVariantLanguageLib.query.filter_by(lib_id=lib_id).first()
+                if linked_project:
+                    return jsonify({"msg": "Cannot delete a lib wich is linked to a project"}), 400
+                lib = Libraries.query.filter_by(id=lib_id).first()
+                db.session.delete(lib)
+
         db.session.commit()
 
         return jsonify({"msg": "Language updated successfully."})
-
-    except ValidationError as e:
-        return jsonify({"msg": f"{e}"}), 400
-
-    except SQLAlchemyError as e:
-        logger.error("Database error occurred: %s", e)
-        db.session.rollback()
-        return (
-            jsonify({"msg": "An error occurred with the Database. Please try again."}),
-            500,
-        )
-
-    except Exception as e:
-        logger.error("Unexpected error occurred: %s", e)
-        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
-
-
-@skills_bp.route("/language/<int:language_id>/orm/<int:orm_id>", methods=["DELETE"])
-@jwt_required()
-def delete_orm(language_id, orm_id):
-    try:
-        language = Languages.query.filter_by(id=language_id).first()
-        if not language:
-            return jsonify({"msg", "Language not found."}), 404
-
-        orm = Orms.query.filter_by(id=orm_id)
-        if not orm:
-            return jsonify({"msg": "Orm not found."}), 404
-
-        db.session.delete(orm)
-        db.session.commit()
-
-        return jsonify({"msg": "Orm deleted successfully"})
-
-    except SQLAlchemyError as e:
-        logger.error("Database error occurred: %s", e)
-        db.session.rollback()
-        return (
-            jsonify({"msg": "An error occurred with the Database. Please try again."}),
-            500,
-        )
-
-    except Exception as e:
-        logger.error("Unexpected error occurred: %s", e)
-        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
-
-
-@skills_bp.route(
-    "/language/<int:language_id>/framework/<int:framework_id>", methods=["DELETE"]
-)
-@jwt_required()
-def delete_framework(language_id, framework_id):
-    try:
-        language = Languages.query.filter_by(id=language_id).first()
-        if not language:
-            return jsonify({"msg", "Language not found."}), 404
-
-        framework = Frameworks.query.filter_by(id=framework_id)
-        if not framework:
-            return jsonify({"msg": "Framework not found."}), 404
-
-        db.session.delete(framework)
-        db.session.commit()
-
-        return jsonify({"msg": "Framework deleted successfully"})
-
-    except SQLAlchemyError as e:
-        logger.error("Database error occurred: %s", e)
-        db.session.rollback()
-        return (
-            jsonify({"msg": "An error occurred with the Database. Please try again."}),
-            500,
-        )
-
-    except Exception as e:
-        logger.error("Unexpected error occurred: %s", e)
-        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
-
-
-@skills_bp.route(
-    "/technology/<int:technology_id>/section/<int:section_id>", methods=["DELETE"]
-)
-@jwt_required()
-def delete_technology_section(technology_id, section_id):
-    try:
-        tech = Technologies.query.filter_by(id=technology_id).first()
-        if not tech:
-            return jsonify({"msg", "Technology not found."}), 404
-
-        tech_section = TechnologySections.query.filter_by(id=section_id)
-
-        if not tech_section:
-            return jsonify({"msg": "Technology section not found."}), 404
-
-        db.session.delete(tech_section)
-        db.session.commit()
-
-        return jsonify({"msg": "Technology section deleted successfully"})
-
-    except SQLAlchemyError as e:
-        logger.error("Database error occurred: %s", e)
-        db.session.rollback()
-        return (
-            jsonify({"msg": "An error occurred with the Database. Please try again."}),
-            500,
-        )
-
-    except Exception as e:
-        logger.error("Unexpected error occurred: %s", e)
-        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
-
-
-@skills_bp.route("/language/<int:language_id>/orm", methods=["POST"])
-@jwt_required()
-def add_orm(language_id):
-    try:
-        orm_schema = ORMFrameworkCreateSchema()
-        data = orm_schema.load(request.get_json())
-
-        language = Languages.query.filter_by(id=language_id).first()
-        if not language:
-            return jsonify({"msg", "Language not found."}), 404
-
-        new_orm = Orms(name=data["name"], language_id=language_id)
-
-        db.session.add(new_orm)
-        db.session.commit()
-
-        return jsonify({"msg": "Orm added successfully"})
-
-    except ValidationError as e:
-        return jsonify({"msg": f"{e}"}), 400
-
-    except SQLAlchemyError as e:
-        logger.error("Database error occurred: %s", e)
-        db.session.rollback()
-        return (
-            jsonify({"msg": "An error occurred with the Database. Please try again."}),
-            500,
-        )
-
-    except Exception as e:
-        logger.error("Unexpected error occurred: %s", e)
-        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
-
-
-@skills_bp.route("/language/<int:language_id>/framework", methods=["POST"])
-@jwt_required()
-def add_framework(language_id):
-    try:
-        framework_schema = ORMFrameworkCreateSchema()
-        data = framework_schema.load(request.get_json())
-
-        language = Languages.query.filter_by(id=language_id).first()
-        if not language:
-            return jsonify({"msg", "Language not found."}), 404
-
-        new_framework = Frameworks(name=data["name"], language_id=language_id)
-
-        db.session.add(new_framework)
-        db.session.commit()
-
-        return jsonify({"msg": "Framework deleted successfully"})
-
-    except ValidationError as e:
-        return jsonify({"msg": f"{e}"}), 400
-
-    except SQLAlchemyError as e:
-        logger.error("Database error occurred: %s", e)
-        db.session.rollback()
-        return (
-            jsonify({"msg": "An error occurred with the Database. Please try again."}),
-            500,
-        )
-
-    except Exception as e:
-        logger.error("Unexpected error occurred: %s", e)
-        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
-
-
-@skills_bp.route("/technology/<int:technology_id>/section/", methods=["POST"])
-@jwt_required()
-def add_technology_section(technology_id):
-    try:
-        tech_section_schema = TechnologySectionCreateSchema()
-        data = tech_section_schema.load(request.get_json())
-
-        technology = Technologies.query.filter_by(id=technology_id).first()
-        if not technology:
-            return jsonify({"msg", "Technology not found."}), 404
-
-        new_technology = TechnologySections(
-            name=data["name"], technology_id=technology_id
-        )
-
-        db.session.add(new_technology)
-        db.session.commit()
-
-        return jsonify({"msg": "Technology section added successfully"})
 
     except ValidationError as e:
         return jsonify({"msg": f"{e}"}), 400

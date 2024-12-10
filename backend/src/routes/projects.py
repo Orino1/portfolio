@@ -15,6 +15,8 @@ from src.models import (
     ProjectVariantLanguageOrm,
     ProjectVariantTechnology,
     Technologies,
+    ProjectVariantLanguageLib,
+    Libraries,
     db,
 )
 from src.validators import ProjectCreateSchema, ProjectUpdateSchema
@@ -30,6 +32,7 @@ def get_all_projects():
             {
                 "projects": [
                     {
+                        "id": project.id,
                         "name": project.name,
                         "description": project.description,
                         "problem_statement": project.problem_statement,
@@ -41,7 +44,7 @@ def get_all_projects():
                                 "github": variant.github,
                                 "id": variant.id,
                                 "languages": [
-                                    lang.lang.name for lang in variant.languages
+                                    {"id": lang.id, "name": lang.lang.name, "actual_language_id" : lang.lang.id, "orms": [ {"id": orm.id, "name": orm.orm.name, "actual_id": orm.orm.id} for orm in lang.orms], "frameworks": [ {"id": fr.id, "name": fr.framework.name, "actual_id": fr.framework.id} for fr in lang.frameworks], "libs": [ {"id": lib.id, "name": lib.name, "actual_id": lib.lib.id} for lib in lang.libs] } for lang in variant.languages
                                 ],
                                 "technologies": [
                                     tech.tech.name for tech in variant.technologies
@@ -87,7 +90,7 @@ def create_project():
 
         for variant in data["variants"]:
             new_variant = ProjectVariant(
-                link=variant["link"],
+                link=variant.get("link"),
                 github=variant.get("github"),
                 project_id=new_project.id,
             )
@@ -103,6 +106,10 @@ def create_project():
 
                 if language.get("orms"):
                     for orm_id in language["orms"]:
+                        orm_exists = Orms.query.filter_by(id=orm_id).first()
+                        if not orm_exists:
+                            return jsonify({"msg": "Orm not found"}), 400
+
                         assiciated_language_orm = ProjectVariantLanguageOrm(
                             project_variant_language_id=associated_language.id,
                             orm_id=orm_id,
@@ -110,18 +117,35 @@ def create_project():
                         db.session.add(assiciated_language_orm)
 
                 if language.get("frameworks"):
-                    for framework_id in language["orms"]:
+                    for framework_id in language["frameworks"]:
+                        framework_exists = Frameworks.query.filter_by(id=framework_id).first()
+                        if not framework_exists:
+                            return jsonify({"msg": "Framework not found"}), 400
+
                         assiciated_language_framework = ProjectVariantLanguageFramework(
                             project_variant_language_id=associated_language.id,
                             framework_id=framework_id,
                         )
                         db.session.add(assiciated_language_framework)
 
-            for id in variant["technologies"]:
-                associated_technology = ProjectVariantTechnology(
-                    technology_id=id, project_variant_id=new_variant.id
-                )
-                db.session.add(associated_technology)
+                if language.get("libraries"):
+                    for lib_id in language["libraries"]:
+                        lib_exists = Libraries.query.filter_by(id=lib_id).first()
+                        if not lib_exists:
+                            return jsonify({"msg": "Library not found"}), 400
+
+                        assiciated_language_lib = ProjectVariantLanguageLib(
+                            project_variant_language_id=associated_language.id,
+                            lib_id=lib_id,
+                        )
+                        db.session.add(assiciated_language_lib)
+
+            if variant.get("technologies"):
+                for id in variant["technologies"]:
+                    associated_technology = ProjectVariantTechnology(
+                        technology_id=id, project_variant_id=new_variant.id
+                    )
+                    db.session.add(associated_technology)
 
         db.session.commit()
 
@@ -191,7 +215,7 @@ def update_project(project_id):
                             db.session.add(assiciated_language_orm)
 
                     if language.get("frameworks"):
-                        for framework_id in language["orms"]:
+                        for framework_id in language["frameworks"]:
                             assiciated_language_framework = (
                                 ProjectVariantLanguageFramework(
                                     project_variant_language_id=associated_language.id,
@@ -199,6 +223,16 @@ def update_project(project_id):
                                 )
                             )
                             db.session.add(assiciated_language_framework)
+                    
+                    if language.get("libraries"):
+                        for lib_id in language["libraries"]:
+                            assiciated_language_lib = (
+                                ProjectVariantLanguageLib(
+                                    project_variant_language_id=associated_language.id,
+                                    lib_id=lib_id,
+                                )
+                            )
+                            db.session.add(assiciated_language_lib)
 
                 for id in variant["technologies"]:
                     technology_association = ProjectVariantTechnology(
@@ -247,6 +281,8 @@ def update_project(project_id):
                                 404,
                             )
                         db.session.delete(associated_language)
+                
+                # we need to hanlde updated stuff hrere
 
                 if variant.get("new_technologies"):
                     for tech_id in variant["new_technologies"]:

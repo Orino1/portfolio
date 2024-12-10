@@ -54,6 +54,9 @@ class ProjectVariantLanguage(db.Model):
     orms = db.relationship(
         "ProjectVariantLanguageOrm", backref="project_variant_language"
     )
+    libs = db.relationship(
+        "ProjectVariantLanguageLib", backref="project_variant_language"
+    )
 
 
 class ProjectVariantLanguageFramework(db.Model):
@@ -86,6 +89,21 @@ class ProjectVariantLanguageOrm(db.Model):
     )
 
     orm = db.relationship("Orms", backref="project_variant_language_orms")
+
+
+class ProjectVariantLanguageLib(db.Model):
+    __tablename__ = "project_variant_lib"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    project_variant_language_id = db.Column(
+        db.Integer,
+        db.ForeignKey("project_variant_language.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    lib_id = db.Column(
+        db.Integer, db.ForeignKey("libraries.id", ondelete="CASCADE"), nullable=False
+    )
+
+    lib = db.relationship("Libraries", backref="project_variant_language_labraries")
 
 
 class ProjectVariantTechnology(db.Model):
@@ -142,6 +160,7 @@ class Languages(db.Model):
     frameworks = db.relationship(
         "Frameworks", backref="languages", cascade="all, delete-orphan"
     )
+    libraries = db.relationship("Libraries", backref="languages", cascade="all, delete-orphan")
 
 
 class Orms(db.Model):
@@ -155,6 +174,14 @@ class Orms(db.Model):
 
 class Frameworks(db.Model):
     __tablename__ = "frameworks"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(50), nullable=False)
+    language_id = db.Column(
+        db.Integer, db.ForeignKey("languages.id", ondelete="CASCADE"), nullable=False
+    )
+
+class Libraries(db.Model):
+    __tablename__ = "libraries"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
     language_id = db.Column(

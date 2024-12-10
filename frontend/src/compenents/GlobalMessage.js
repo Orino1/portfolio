@@ -4,8 +4,10 @@ import { useGlobalMessageContext } from "../contexts/GlobalMessageContext";
 export default function GlobalMessage() {
     const { globalMessage } = useGlobalMessageContext();
 
+    const messageClass = globalMessage.type === 'error' ? styles.error : styles.success;
+
     return (
-        <div className={`${styles.msg} ${globalMessage.type}`}>
+        <div className={`${styles.msg} ${messageClass}`}>
             {globalMessage.msg}
         </div>
     );

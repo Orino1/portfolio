@@ -394,3 +394,30 @@ def delete_thumbnail(thumbnail_id):
     except Exception as e:
         logger.error("Unexpected error occurred: %s", e)
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
+
+
+@posts_bp.route("/thumbnail", methods=["GET"])
+@jwt_required()
+def get_all_thumbnails():
+    try:
+        thumbnails = Thumbnail.query.all()
+
+        thumbnails_data = [
+            {
+                "id": thumbnail.id,
+                "file": thumbnail.file,
+            }
+            for thumbnail in thumbnails
+        ]
+
+        return jsonify({"thumbnails": thumbnails_data})
+    except SQLAlchemyError as e:
+        logger.error("Database error occurred: %s", e)
+        return (
+            jsonify({"msg": "An error occurred with the Database. Please try again."}),
+            500,
+        )
+
+    except Exception as e:
+        logger.error("Unexpected error occurred: %s", e)
+        return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500

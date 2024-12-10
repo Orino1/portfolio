@@ -30,51 +30,40 @@ export default function Footer() {
                     <div>
                         <h4>ORINO</h4>
                         <div className={styles.firstSub}>
-                            <Link><i className="fa-brands fa-linkedin"></i></Link>
-                            <Link><i className="fa-brands fa-facebook"></i></Link>
-                            <Link><i className="fa-brands fa-youtube"></i></Link>
-                            <Link><i className="fa-brands fa-x-twitter"></i></Link>
+                            <Link>
+                                <i className="fa-brands fa-linkedin"></i>
+                            </Link>
+                            <Link>
+                                <i className="fa-brands fa-facebook"></i>
+                            </Link>
+                            <Link>
+                                <i className="fa-brands fa-youtube"></i>
+                            </Link>
+                            <Link>
+                                <i className="fa-brands fa-x-twitter"></i>
+                            </Link>
                         </div>
                     </div>
                     <div>
                         <h4>Location</h4>
-                        <div>
-                            <div>
-                                <p>Country: </p>
-                                <h4>Morocco</h4>
-                            </div>
-                            <div>
-                                <p>City:</p>
-                                <h4>El Jadida</h4>
-                            </div>
-                        </div>
+                        <p>
+                            Currently based in El Jadida, Casablanca Province,
+                            Morocco.
+                        </p>
                     </div>
                     <div>
-                        <h4>Work inquiries</h4>
+                        <h4>Work Inquiries</h4>
                         <div>
-                            <p>Contact me at</p>
-                            <h4>soon@orino.me</h4>
-                            <p>or</p>
-                            <h4>+212600000000</h4>
-                        </div>
-                    </div>
-                    <div>
-                        <h4>Sign up for the newsletter</h4>
-                        <div>
-                            <form className={styles.newsLetterForm}>
-                                <fieldset className={email && styles.active}>
-                                    <input
-                                        onBlur={handleBlur}
-                                        onChange={(e) => handleChange(e)}
-                                        type="text"
-                                    ></input>
-                                    <legend>Email</legend>
-                                </fieldset>
-                                {err && (
-                                    <ErrorMessage message={err}></ErrorMessage>
-                                )}
-                                <button>Sign up</button>
-                            </form>
+                            <p>
+                                Email:
+                                <a href="mailto:contact@orino.me">
+                                    contact@orino.me
+                                </a>
+                            </p>
+                            <p>
+                                Phone/WhatsApp:
+                                <a href="tel:+212600000000">+212 600 000 000</a>
+                            </p>
                         </div>
                     </div>
                 </section>

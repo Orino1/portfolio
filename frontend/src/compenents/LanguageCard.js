@@ -1,27 +1,41 @@
-import styles from "../assets/styles/SkillCard.module.css";
+import styles from "../assets/styles/LanguageCard.module.css";
 
-export default function LanguageCard({language}) {
+export default function LanguageCard({ language }) {
+
     return (
         <div className={styles.container}>
-            <div>
-                <div className={styles.cardHeader}>
-                    <h2>
-                        <i class="fa-solid fa-code"></i> {language.language}
-                    </h2>
+            <h2>
+                <i class="fa-solid fa-code"></i> {language.language}
+            </h2>
+            <hr></hr>
+            <div className={styles.subContainer}>
+                <h3>Frameworks:</h3>
+                <div className={styles.elements}>
+                            {language.frameworks.length === 0
+                                ? <span>N/A</span>
+                                : language.frameworks
+                                      .map((fr) => <span>{fr.name}</span>)
+                            }
                 </div>
-                <div className={styles.cardContent}>
-                    <div className={styles.skillCategory}>
-                        <h3>Frameworks</h3>
-                        <p>{language.frameworks.length === 0 ? 'N/A' : language.frameworks.map(orm => orm.name).join(', ')}</p>
-                    </div>
-                    <div className={styles.skillCategory}>
-                        <h3>ORMS</h3>
-                        <p>{language.orms.length === 0 ? 'N/A' : language.orms.map(orm => orm.name).join(', ')}</p>
-                    </div>
-                    <div className={styles.skillCategory}>
-                        <h3>Libraries</h3>
-                        <p>Flask Ecosystem</p>
-                    </div>
+            </div>
+            <div className={styles.subContainer}>
+                <h3>Orms:</h3>
+                <div className={styles.elements}>
+                            {language.orms.length === 0
+                                ? <span>N/A</span>
+                                : language.orms
+                                      .map((orm) => <span>{orm.name}</span>)
+                            }
+                </div>
+            </div>
+            <div className={styles.subContainer}>
+                <h3>Libraries:</h3>
+                <div className={styles.elements}>
+                            {language.libraries.length === 0
+                                ? <span>N/A</span>
+                                : language.libraries
+                                      .map((lib) => <span>{lib.name}</span>)
+                            }
                 </div>
             </div>
         </div>

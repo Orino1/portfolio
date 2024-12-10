@@ -176,3 +176,10 @@
     cursor: pointer;
     padding: 10px 10px;
 }
+
+
+.container > i:nth-of-type(3) {
+    position: absolute;
+    left: 50px;
+    color: black;
+}

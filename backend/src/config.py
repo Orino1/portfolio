@@ -19,6 +19,8 @@ class Config:
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_COOKIE_CSRF_PROTECT = False
+    JWT_COOKIE_SAMESITE = None
+    JWT_COOKIE_SECURE = False
 
     UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads/thumbnails")
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
