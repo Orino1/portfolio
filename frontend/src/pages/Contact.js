@@ -4,6 +4,9 @@ import "../assets/styles/styles.css";
 import { Helmet } from "react-helmet";
 
 export default function Contact() {
+    const email = process.env.REACT_APP_EMAIL;
+    const phone = process.env.REACT_APP_PHONE;
+
     return (
         <MainLayout>
             <Helmet>
@@ -18,7 +21,7 @@ export default function Contact() {
                             you may have. Feel free to reach out, and I’ll get
                             back to you within a couple of hours.
                         </p>
-                        <a href="mailto:contact@orino.me">Send an email</a>
+                        <a href={`mailto:${email}`}>Send an email</a>
                     </div>
                 </div>
                 <div className={`${styles.content} maxMainContainer`}>
@@ -27,8 +30,8 @@ export default function Contact() {
                             <i className="fa-solid fa-message"></i>
                             <h3>Get in touch</h3>
                             <p>Work and general inquiries</p>
-                            <a href="mailto:contact@orino.me">contact@orino.me</a>
-                            <a href="tel:+212600000000">+212 600 000 000</a>
+                            <a href={`mailto:${email}`}>{email}</a>
+                            <a href={`tel:${phone}`}>{phone}</a>
                         </div>
                         <div>
                             <i className="fa-regular fa-clock"></i>

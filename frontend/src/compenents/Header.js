@@ -8,6 +8,7 @@ export default function Header() {
     const [togglePosition, setTogglePosition] = useState("start");
     const positions = ["start", "middle", "end"];
     const [isFixed, setIsFixed] = useState(false);
+    const name = process.env.REACT_APP_NAME;
 
     const handleToggle = () => {
         const currentIndex = positions.indexOf(togglePosition);
@@ -40,7 +41,7 @@ export default function Header() {
                 </button>
                 {openMenu && <Menu handleClose={setOpenMenu}></Menu>}
                 <Link className={styles.logo} to="/">
-                    ORINO
+                    {name}
                 </Link>
             </section>
             <section></section>
@@ -61,6 +62,10 @@ export default function Header() {
 }
 
 function Menu({ handleClose }) {
+    const email = process.env.REACT_APP_EMAIL;
+    const phone = process.env.REACT_APP_PHONE;
+    const location =process.env.REACT_LOCATION
+
     return (
         <div className={`${styles.menu} 'fade-in'`}>
             <section>
@@ -82,15 +87,12 @@ function Menu({ handleClose }) {
                 <section>
                     <h4>Get In Touch</h4>
                     <p>
-                        Currently based in El Jadida, Casablanca Province,
-                        Morocco.
+                        {location}
                     </p>
                     <p>
-                        Email: <a href="mailto:contact@orino.me">contact@orino.me</a>
+                        Email: <a href={`mailto:${email}`}>{email}</a>
                     </p>
-                    <p>
-                        Phone/WhatsApp: <a href="tel:+212600000000">+212 600 000 000</a>
-                    </p>
+                    <p>Phone/WhatsApp: <a href={`tel:${phone}`}>{phone}</a></p>
                 </section>
             </section>
         </div>

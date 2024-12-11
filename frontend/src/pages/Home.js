@@ -14,6 +14,7 @@ export default function Home() {
     const { setGlobalMessage } = useGlobalMessageContext();
     const [projects, setProjects] = useState([]);
     const [skills, setSkills] = useState(null);
+    const realName = process.env.REACT_APP_REALNAME
 
     useEffect(() => {
         const getProjects = async () => {
@@ -47,7 +48,7 @@ export default function Home() {
                 <section>
                     <div>
                         <div>
-                            <p>MOHAMMED ELAOUJA</p>
+                            <p>{realName}</p>
                             <h1>
                                 Building Solutions, for Your Needs
                                 <span>.</span>
