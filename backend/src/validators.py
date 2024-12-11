@@ -54,7 +54,9 @@ class TechnologyUpdateSchema(Schema):
     old_sections = fields.List(
         fields.Nested(TechnologySectionUpdateSchema), validate=validate.Length(min=1)
     )
-    delete_sections = fields.List(fields.Integer(validate=validate.Range(min=1)) , validate=validate.Length(min=1))
+    delete_sections = fields.List(
+        fields.Integer(validate=validate.Range(min=1)), validate=validate.Length(min=1)
+    )
 
 
 # this is only used only internnly by LanguageUpdateSchema
@@ -83,9 +85,15 @@ class LanguageUpdateSchema(Schema):
     old_libraries = fields.List(
         fields.Nested(ORMFrameworkUpdateSchema), validate=validate.Length(min=1)
     )
-    delete_orms = fields.List(fields.Integer(validate=validate.Range(min=1)) , validate=validate.Length(min=1))
-    delete_frameworks = fields.List(fields.Integer(validate=validate.Range(min=1)) , validate=validate.Length(min=1))
-    delete_libraries = fields.List(fields.Integer(validate=validate.Range(min=1)) , validate=validate.Length(min=1))
+    delete_orms = fields.List(
+        fields.Integer(validate=validate.Range(min=1)), validate=validate.Length(min=1)
+    )
+    delete_frameworks = fields.List(
+        fields.Integer(validate=validate.Range(min=1)), validate=validate.Length(min=1)
+    )
+    delete_libraries = fields.List(
+        fields.Integer(validate=validate.Range(min=1)), validate=validate.Length(min=1)
+    )
 
 
 class ORMFrameworkCreateSchema(Schema):
@@ -113,9 +121,7 @@ class ProjectVariantCreateSchema(Schema):
         required=True,
         validate=validate.Length(min=1),
     )
-    technologies = fields.List(
-        fields.Integer(), validate=validate.Length(min=1)
-    )
+    technologies = fields.List(fields.Integer(), validate=validate.Length(min=1))
 
 
 class ProjectCreateSchema(Schema):

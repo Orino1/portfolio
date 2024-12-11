@@ -4,28 +4,16 @@ from marshmallow import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
 from src.config import logger
-from src.models import (
-    Frameworks,
-    Languages,
-    Orms,
-    ProjectVariantLanguage,
-    ProjectVariantTechnology,
-    Technologies,
-    TechnologySections,
-    ProjectVariantLanguageOrm,
-    ProjectVariantLanguageFramework,
-    Libraries,
-    ProjectVariantLanguageLib,
-    db,
-)
-from src.validators import (
-    LanguageCreateSchema,
-    LanguageUpdateSchema,
-    ORMFrameworkCreateSchema,
-    TechnologyCreateSchema,
-    TechnologySectionCreateSchema,
-    TechnologyUpdateSchema,
-)
+from src.models import (Frameworks, Languages, Libraries, Orms,
+                        ProjectVariantLanguage,
+                        ProjectVariantLanguageFramework,
+                        ProjectVariantLanguageLib, ProjectVariantLanguageOrm,
+                        ProjectVariantTechnology, Technologies,
+                        TechnologySections, db)
+from src.validators import (LanguageCreateSchema, LanguageUpdateSchema,
+                            ORMFrameworkCreateSchema, TechnologyCreateSchema,
+                            TechnologySectionCreateSchema,
+                            TechnologyUpdateSchema)
 
 skills_bp = Blueprint("skills", __name__)
 
@@ -45,9 +33,8 @@ def get_skills():
                     for framework in language.frameworks
                 ],
                 "libraries": [
-                    {"id": lib.id, "name": lib.name}
-                    for lib in language.libraries
-                ]
+                    {"id": lib.id, "name": lib.name} for lib in language.libraries
+                ],
             }
             for language in languages
         ]
@@ -87,7 +74,9 @@ def get_skills():
         )
 
 
-@skills_bp.route("/techonolgy/<int:techonolgy_id>", strict_slashes=False, methods=["DELETE"])
+@skills_bp.route(
+    "/techonolgy/<int:techonolgy_id>", strict_slashes=False, methods=["DELETE"]
+)
 @jwt_required()
 def delete_techonolgy(techonolgy_id):
     try:
@@ -120,7 +109,9 @@ def delete_techonolgy(techonolgy_id):
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/language/<int:language_id>", strict_slashes=False, methods=["DELETE"])
+@skills_bp.route(
+    "/language/<int:language_id>", strict_slashes=False, methods=["DELETE"]
+)
 @jwt_required()
 def delete_language(language_id):
     try:
@@ -264,7 +255,9 @@ def update_techonolgy(tech_id):
 
         if data.get("old_sections"):
             for section in data["old_sections"]:
-                old_section = TechnologySections.query.filter_by(id=section["id"]).first()
+                old_section = TechnologySections.query.filter_by(
+                    id=section["id"]
+                ).first()
 
                 if not old_section:
                     return (
@@ -277,13 +270,23 @@ def update_techonolgy(tech_id):
                     old_section.content = section["content"]
 
         if data.get("delete_sections"):
-            if len(data["delete_sections"]) == len(technology.sections) + len(data.get("new_sections", [])):
-                return jsonify({"msg": "Cannot delete all sections for the technology."}), 400
+            if len(data["delete_sections"]) == len(technology.sections) + len(
+                data.get("new_sections", [])
+            ):
+                return (
+                    jsonify({"msg": "Cannot delete all sections for the technology."}),
+                    400,
+                )
 
             for section_id in data["delete_sections"]:
-                section_to_delete = TechnologySections.query.filter_by(id=section_id).first()
+                section_to_delete = TechnologySections.query.filter_by(
+                    id=section_id
+                ).first()
                 if not section_to_delete:
-                    return jsonify({"msg": f"Section with id {section_id} not found."}), 400
+                    return (
+                        jsonify({"msg": f"Section with id {section_id} not found."}),
+                        400,
+                    )
                 db.session.delete(section_to_delete)
 
         db.session.commit()
@@ -371,25 +374,48 @@ def update_language(lang_id):
 
         if data.get("delete_orms"):
             for orm_id in data["delete_orms"]:
-                linked_project = ProjectVariantLanguageOrm.query.filter_by(orm_id=orm_id).first()
+                linked_project = ProjectVariantLanguageOrm.query.filter_by(
+                    orm_id=orm_id
+                ).first()
                 if linked_project:
-                    return jsonify({"msg": "Cannot delete an orm wich is linked to a project"}), 400
+                    return (
+                        jsonify(
+                            {"msg": "Cannot delete an orm wich is linked to a project"}
+                        ),
+                        400,
+                    )
                 orm = Orms.query.filter_by(id=orm_id).first()
                 db.session.delete(orm)
-        
+
         if data.get("delete_frameworks"):
             for framework_id in data["delete_frameworks"]:
-                linked_project = ProjectVariantLanguageFramework.query.filter_by(framework_id=framework_id).first()
+                linked_project = ProjectVariantLanguageFramework.query.filter_by(
+                    framework_id=framework_id
+                ).first()
                 if linked_project:
-                    return jsonify({"msg": "Cannot delete a framework wich is linked to a project"}), 400
+                    return (
+                        jsonify(
+                            {
+                                "msg": "Cannot delete a framework wich is linked to a project"
+                            }
+                        ),
+                        400,
+                    )
                 framework = Frameworks.query.filter_by(id=framework_id).first()
                 db.session.delete(framework)
 
         if data.get("delete_libraries"):
             for lib_id in data["delete_libraries"]:
-                linked_project = ProjectVariantLanguageLib.query.filter_by(lib_id=lib_id).first()
+                linked_project = ProjectVariantLanguageLib.query.filter_by(
+                    lib_id=lib_id
+                ).first()
                 if linked_project:
-                    return jsonify({"msg": "Cannot delete a lib wich is linked to a project"}), 400
+                    return (
+                        jsonify(
+                            {"msg": "Cannot delete a lib wich is linked to a project"}
+                        ),
+                        400,
+                    )
                 lib = Libraries.query.filter_by(id=lib_id).first()
                 db.session.delete(lib)
 

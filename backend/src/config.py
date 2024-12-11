@@ -2,7 +2,7 @@ import logging
 import os
 from urllib.parse import quote
 
-DB_HOST= os.getenv("DB_HOST")
+DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = quote(

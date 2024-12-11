@@ -4,21 +4,11 @@ from marshmallow import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
 from src.config import logger
-from src.models import (
-    Frameworks,
-    Languages,
-    Orms,
-    Project,
-    ProjectVariant,
-    ProjectVariantLanguage,
-    ProjectVariantLanguageFramework,
-    ProjectVariantLanguageOrm,
-    ProjectVariantTechnology,
-    Technologies,
-    ProjectVariantLanguageLib,
-    Libraries,
-    db,
-)
+from src.models import (Frameworks, Languages, Libraries, Orms, Project,
+                        ProjectVariant, ProjectVariantLanguage,
+                        ProjectVariantLanguageFramework,
+                        ProjectVariantLanguageLib, ProjectVariantLanguageOrm,
+                        ProjectVariantTechnology, Technologies, db)
 from src.validators import ProjectCreateSchema, ProjectUpdateSchema
 
 projects_bp = Blueprint("projects", __name__)
@@ -44,7 +34,36 @@ def get_all_projects():
                                 "github": variant.github,
                                 "id": variant.id,
                                 "languages": [
-                                    {"id": lang.id, "name": lang.lang.name, "actual_language_id" : lang.lang.id, "orms": [ {"id": orm.id, "name": orm.orm.name, "actual_id": orm.orm.id} for orm in lang.orms], "frameworks": [ {"id": fr.id, "name": fr.framework.name, "actual_id": fr.framework.id} for fr in lang.frameworks], "libs": [ {"id": lib.id, "name": lib.lib.name, "actual_id": lib.lib.id} for lib in lang.libs] } for lang in variant.languages
+                                    {
+                                        "id": lang.id,
+                                        "name": lang.lang.name,
+                                        "actual_language_id": lang.lang.id,
+                                        "orms": [
+                                            {
+                                                "id": orm.id,
+                                                "name": orm.orm.name,
+                                                "actual_id": orm.orm.id,
+                                            }
+                                            for orm in lang.orms
+                                        ],
+                                        "frameworks": [
+                                            {
+                                                "id": fr.id,
+                                                "name": fr.framework.name,
+                                                "actual_id": fr.framework.id,
+                                            }
+                                            for fr in lang.frameworks
+                                        ],
+                                        "libs": [
+                                            {
+                                                "id": lib.id,
+                                                "name": lib.lib.name,
+                                                "actual_id": lib.lib.id,
+                                            }
+                                            for lib in lang.libs
+                                        ],
+                                    }
+                                    for lang in variant.languages
                                 ],
                                 "technologies": [
                                     tech.tech.name for tech in variant.technologies
@@ -118,7 +137,9 @@ def create_project():
 
                 if language.get("frameworks"):
                     for framework_id in language["frameworks"]:
-                        framework_exists = Frameworks.query.filter_by(id=framework_id).first()
+                        framework_exists = Frameworks.query.filter_by(
+                            id=framework_id
+                        ).first()
                         if not framework_exists:
                             return jsonify({"msg": "Framework not found"}), 400
 
@@ -223,14 +244,12 @@ def update_project(project_id):
                                 )
                             )
                             db.session.add(assiciated_language_framework)
-                    
+
                     if language.get("libraries"):
                         for lib_id in language["libraries"]:
-                            assiciated_language_lib = (
-                                ProjectVariantLanguageLib(
-                                    project_variant_language_id=associated_language.id,
-                                    lib_id=lib_id,
-                                )
+                            assiciated_language_lib = ProjectVariantLanguageLib(
+                                project_variant_language_id=associated_language.id,
+                                lib_id=lib_id,
                             )
                             db.session.add(assiciated_language_lib)
 
@@ -281,7 +300,7 @@ def update_project(project_id):
                                 404,
                             )
                         db.session.delete(associated_language)
-                
+
                 # we need to hanlde updated stuff hrere
 
                 if variant.get("new_technologies"):

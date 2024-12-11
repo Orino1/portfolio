@@ -137,7 +137,9 @@ class Languages(db.Model):
     frameworks = db.relationship(
         "Frameworks", backref="languages", cascade="all, delete-orphan"
     )
-    libraries = db.relationship("Libraries", backref="languages", cascade="all, delete-orphan")
+    libraries = db.relationship(
+        "Libraries", backref="languages", cascade="all, delete-orphan"
+    )
 
 
 class Orms(db.Model):
@@ -156,6 +158,7 @@ class Frameworks(db.Model):
     language_id = db.Column(
         db.Integer, db.ForeignKey("languages.id", ondelete="CASCADE"), nullable=False
     )
+
 
 class Libraries(db.Model):
     __tablename__ = "libraries"

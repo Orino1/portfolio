@@ -1,12 +1,12 @@
+import os
+
 from flask import Flask
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
-from flask_cors import CORS
 
 from .config import Config
 from .models import db
-
-import os
 
 
 def create_app():
@@ -19,28 +19,20 @@ def create_app():
 
     jwt = JWTManager(app)
 
-
     # allowing cross origin esource sharing
-    CORS(app, origins=os.getenv("CORS_ORIGINS", "").split(","), supports_credentials=True)
+    CORS(
+        app, origins=os.getenv("CORS_ORIGINS", "").split(","), supports_credentials=True
+    )
 
     with app.app_context():
 
         # importing models for migrations
-        from .models import (
-            Admin,
-            Frameworks,
-            Languages,
-            Orms,
-            Project,
-            ProjectVariant,
-            ProjectVariantLanguage,
-            ProjectVariantLanguageFramework,
-            ProjectVariantLanguageOrm,
-            ProjectVariantTechnology,
-            Technologies,
-            TechnologySections,
-            Libraries,
-        )
+        from .models import (Admin, Frameworks, Languages, Libraries, Orms,
+                             Project, ProjectVariant, ProjectVariantLanguage,
+                             ProjectVariantLanguageFramework,
+                             ProjectVariantLanguageOrm,
+                             ProjectVariantTechnology, Technologies,
+                             TechnologySections)
 
     # imoprting blueprints
     from .routes import auth_bp, projects_bp, skills_bp
