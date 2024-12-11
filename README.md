@@ -219,7 +219,7 @@ soon
     ```
     - The frontend should now be running on http://localhost:3000
 
-## Deployment ( using nginx )
+### Deployment ( using nginx )
 
 1. **Building and deploying the Frontend:**
     - Navigate to the `frontend/` folder:
