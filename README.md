@@ -48,6 +48,7 @@ portfolio/
 │   ├── migrations/                 # Database migration files
 │   ├── requirements.txt            # dependencies files
 │   ├── example.env                 # examples of environment variables
+│   ├── create_admin.py             # Script for initializing the admin account
 │   ├── run.py                      # Entry point for staging env
 │   └── app.py                      # Entry point for production env
 │
