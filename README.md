@@ -165,7 +165,7 @@ soon
 
 1. **Clone the Repository:**
     ```
-    git clone https://github.com/Orino1/portfolio.git
+    git clone git@github.com:Orino1/portfolio-react-flask.git
     ```
    
 2. **Set Up the Backend:**
