@@ -24,7 +24,7 @@ from src.validators import ProjectCreateSchema, ProjectUpdateSchema
 projects_bp = Blueprint("projects", __name__)
 
 
-@projects_bp.route("/", methods=["GET"])
+@projects_bp.route("/", strict_slashes=False, methods=["GET"])
 def get_all_projects():
     try:
         projects = Project.query.all()
@@ -44,7 +44,7 @@ def get_all_projects():
                                 "github": variant.github,
                                 "id": variant.id,
                                 "languages": [
-                                    {"id": lang.id, "name": lang.lang.name, "actual_language_id" : lang.lang.id, "orms": [ {"id": orm.id, "name": orm.orm.name, "actual_id": orm.orm.id} for orm in lang.orms], "frameworks": [ {"id": fr.id, "name": fr.framework.name, "actual_id": fr.framework.id} for fr in lang.frameworks], "libs": [ {"id": lib.id, "name": lib.name, "actual_id": lib.lib.id} for lib in lang.libs] } for lang in variant.languages
+                                    {"id": lang.id, "name": lang.lang.name, "actual_language_id" : lang.lang.id, "orms": [ {"id": orm.id, "name": orm.orm.name, "actual_id": orm.orm.id} for orm in lang.orms], "frameworks": [ {"id": fr.id, "name": fr.framework.name, "actual_id": fr.framework.id} for fr in lang.frameworks], "libs": [ {"id": lib.id, "name": lib.lib.name, "actual_id": lib.lib.id} for lib in lang.libs] } for lang in variant.languages
                                 ],
                                 "technologies": [
                                     tech.tech.name for tech in variant.technologies
@@ -72,7 +72,7 @@ def get_all_projects():
         )
 
 
-@projects_bp.route("/", methods=["POST"])
+@projects_bp.route("/", strict_slashes=False, methods=["POST"])
 @jwt_required()
 def create_project():
     try:
@@ -168,7 +168,7 @@ def create_project():
         )
 
 
-@projects_bp.route("/<int:project_id>", methods=["PATCH"])
+@projects_bp.route("/<int:project_id>", strict_slashes=False, methods=["PATCH"])
 @jwt_required()
 def update_project(project_id):
     try:
@@ -343,7 +343,7 @@ def update_project(project_id):
         )
 
 
-@projects_bp.route("/<int:project_id>", methods=["DELETE"])
+@projects_bp.route("/<int:project_id>", strict_slashes=False, methods=["DELETE"])
 @jwt_required()
 def delete_project(project_id):
     try:

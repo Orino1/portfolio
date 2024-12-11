@@ -6,6 +6,8 @@ from flask_cors import CORS
 from .config import Config
 from .models import db
 
+import os
+
 
 def create_app():
     app = Flask(__name__)
@@ -19,7 +21,7 @@ def create_app():
 
 
     # allowing cross origin esource sharing
-    CORS(app, resources={r"/*": {"origins": "http://localhost:3000", "supports_credentials": True}})
+    CORS(app, origins=os.getenv("CORS_ORIGINS", "").split(","), supports_credentials=True)
 
     with app.app_context():
 
@@ -29,7 +31,6 @@ def create_app():
             Frameworks,
             Languages,
             Orms,
-            Posts,
             Project,
             ProjectVariant,
             ProjectVariantLanguage,
@@ -38,17 +39,15 @@ def create_app():
             ProjectVariantTechnology,
             Technologies,
             TechnologySections,
-            Thumbnail,
             Libraries,
         )
 
     # imoprting blueprints
-    from .routes import auth_bp, posts_bp, projects_bp, skills_bp
+    from .routes import auth_bp, projects_bp, skills_bp
 
     # registering blueprints
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(projects_bp, url_prefix="/api/projects")
     app.register_blueprint(skills_bp, url_prefix="/api/skills")
-    app.register_blueprint(posts_bp, url_prefix="/api/posts")
 
     return app

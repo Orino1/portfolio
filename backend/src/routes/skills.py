@@ -30,7 +30,7 @@ from src.validators import (
 skills_bp = Blueprint("skills", __name__)
 
 
-@skills_bp.route("/", methods=["GET"])
+@skills_bp.route("/", strict_slashes=False, methods=["GET"])
 def get_skills():
     try:
         languages = Languages.query.all()
@@ -87,7 +87,7 @@ def get_skills():
         )
 
 
-@skills_bp.route("/techonolgy/<int:techonolgy_id>", methods=["DELETE"])
+@skills_bp.route("/techonolgy/<int:techonolgy_id>", strict_slashes=False, methods=["DELETE"])
 @jwt_required()
 def delete_techonolgy(techonolgy_id):
     try:
@@ -120,7 +120,7 @@ def delete_techonolgy(techonolgy_id):
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/language/<int:language_id>", methods=["DELETE"])
+@skills_bp.route("/language/<int:language_id>", strict_slashes=False, methods=["DELETE"])
 @jwt_required()
 def delete_language(language_id):
     try:
@@ -153,7 +153,7 @@ def delete_language(language_id):
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/techonolgy", methods=["POST"])
+@skills_bp.route("/techonolgy", strict_slashes=False, methods=["POST"])
 @jwt_required()
 def add_techonolgy():
     try:
@@ -191,7 +191,7 @@ def add_techonolgy():
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/language", methods=["POST"])
+@skills_bp.route("/language", strict_slashes=False, methods=["POST"])
 @jwt_required()
 def add_language():
     try:
@@ -237,7 +237,7 @@ def add_language():
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/techonolgy/<int:tech_id>", methods=["PATCH"])
+@skills_bp.route("/techonolgy/<int:tech_id>", strict_slashes=False, methods=["PATCH"])
 @jwt_required()
 def update_techonolgy(tech_id):
     try:
@@ -306,7 +306,7 @@ def update_techonolgy(tech_id):
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@skills_bp.route("/language/<int:lang_id>", methods=["PATCH"])
+@skills_bp.route("/language/<int:lang_id>", strict_slashes=False, methods=["PATCH"])
 @jwt_required()
 def update_language(lang_id):
     try:

@@ -16,7 +16,7 @@ from src.models import Admin, db
 auth_bp = Blueprint("auth", __name__)
 
 
-@auth_bp.route("/login", methods=["POST"])
+@auth_bp.route("/login", strict_slashes=False, methods=["POST"])
 def login():
     try:
         data = request.get_json()
@@ -67,7 +67,7 @@ def login():
         return jsonify({"msg": "An unexpected error occurred. Please try again."}), 500
 
 
-@auth_bp.route("/refresh", methods=["GET"])
+@auth_bp.route("/refresh", strict_slashes=False, methods=["GET"])
 @jwt_required(refresh=True)
 def refresh():
     try:
@@ -86,7 +86,7 @@ def refresh():
         return jsonify({"msg": "An unexpected error occurred"}), 500
 
 
-@auth_bp.route("/password", methods=["PATCH"])
+@auth_bp.route("/password", strict_slashes=False, methods=["PATCH"])
 @jwt_required()
 def change_password():
     try:
@@ -116,7 +116,7 @@ def change_password():
         return jsonify({"msg": "An unexpected error occurred"}), 500
 
 
-@auth_bp.route("/status", methods=["GET"])
+@auth_bp.route("/status", strict_slashes=False, methods=["GET"])
 @jwt_required()
 def auth_status():
     return jsonify({"success": True})

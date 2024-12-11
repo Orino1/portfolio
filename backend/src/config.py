@@ -2,6 +2,8 @@ import logging
 import os
 from urllib.parse import quote
 
+DB_HOST= os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
 DB_USERNAME = os.getenv("DB_USERNAME")
 DB_PASSWORD = quote(
     os.getenv("DB_PASSWORD")
@@ -12,7 +14,7 @@ DB_NAME = os.getenv("DB_NAME")
 class Config:
 
     SQLALCHEMY_DATABASE_URI = (
-        f"mysql://{DB_USERNAME}:{DB_PASSWORD}@localhost:3306/{DB_NAME}"
+        f"mysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv("SECRET_KEY")
@@ -21,9 +23,6 @@ class Config:
     JWT_COOKIE_CSRF_PROTECT = False
     JWT_COOKIE_SAMESITE = None
     JWT_COOKIE_SECURE = False
-
-    UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads/thumbnails")
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
 
 
 logger = logging.getLogger("main")
