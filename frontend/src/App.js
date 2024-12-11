@@ -3,13 +3,10 @@ import "./App.css";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Contact from "./pages/Contact";
-import About from "./pages/About";
-import Blog from "./pages/Blog";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import GlobalMessageProvider from "./contexts/GlobalMessageContext";
 import AuthProvider from "./contexts/AuthContext";
-import PortfolioPage from "./pages/PortfolioPage";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 
@@ -21,10 +18,7 @@ function App() {
                     <ScrollToTop/>
                     <Routes>
                         <Route path="/" element={<Home />}></Route>
-                        <Route path="/about" element={<About />}></Route>
                         <Route path="/contact" element={<Contact />}></Route>
-                        <Route path="/blog" element={<Blog />}></Route>
-                        <Route path="/portfolio" element={<PortfolioPage />}></Route>
                         <Route
                             path="/admin/login"
                             element={<AdminLogin />}

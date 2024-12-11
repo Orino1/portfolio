@@ -71,7 +71,7 @@ function Home({ handleClick }) {
     ) : (
         <div className={`${styles.container} sub-admin-page-layout`}>
             <div>
-                <h1></h1>
+                <h1>Skills {languages && technologies ? `(${languages.length + technologies.length})` : ""}</h1>
                 <div>
                     <button onClick={() => handleClick("newLang")}>
                         New Language
@@ -84,7 +84,7 @@ function Home({ handleClick }) {
             <div>
                 <div>
                     <h3>Languages. {languages && `(${languages.length})`}</h3>
-                    <div>
+                    <div className={styles.usubSection}>
                         {languages &&
                             languages.map((lang) => (
                                 <LanguageCardV3
@@ -100,7 +100,7 @@ function Home({ handleClick }) {
                         Technologies.{" "}
                         {technologies && `(${technologies.length})`}
                     </h3>
-                    <div>
+                    <div className={styles.usubSection}>
                         {technologies &&
                             technologies.map((tech) => (
                                 <GeneralSkillCardV3

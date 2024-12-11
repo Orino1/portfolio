@@ -2,9 +2,9 @@ import AdminLayout from "./AdminLayout";
 import styles from "../assets/styles/AdminDashboard.module.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import AdminPosts from "./AdminPosts";
 import AdminSkills from "./AdminSkills";
 import AdminProjects from "./AdminProjects";
+import AdminAccount from "./AdminAccount";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,8 @@ export default function AdminDashboard() {
     const { isAdmin } = useAuthContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const name = process.env.REACT_APP_NAME
 
     useEffect(() => {
         if (!isAdmin) {
@@ -21,47 +23,43 @@ export default function AdminDashboard() {
         }
     }, [isAdmin]);
 
-    const [content, setContent] = useState("Posts");
+    const [content, setContent] = useState("Skills");
 
     const handleClick = (content) => {
+        setSidebarOpen(false);
         setContent(content);
     };
 
+    const handleExpandBtnClick = () => {
+        setSidebarOpen(prev => !prev);
+    }
+
     const renderContent = () => {
         switch (content) {
-            case "Posts":
-                return <AdminPosts></AdminPosts>;
-            case "Technologies":
-                return <AdminSkills></AdminSkills>;
+            case "Skills":
+                return <AdminSkills/>;
             case "Projects":
-                return <AdminProjects></AdminProjects>
+                return <AdminProjects/>;
+            case "Account":
+                return <AdminAccount/>;
         }
     };
 
     return (
         <AdminLayout>
             <div className={styles.container}>
-                <div>
+                <div className={sidebarOpen && styles.open}>
+                <Link to="/" className={styles.logo}>{name}</Link>
                     <div>
                         <Link
-                            onClick={() => handleClick("Posts")}
+                            onClick={() => handleClick("Skills")}
                             className={
-                                content === "Posts" ? styles.selected : ""
-                            }
-                        >
-                            Posts
-                        </Link>
-                    </div>
-                    <div>
-                        <Link
-                            onClick={() => handleClick("Technologies")}
-                            className={
-                                content === "Technologies"
+                                content === "Skills"
                                     ? styles.selected
                                     : ""
                             }
                         >
-                            Technologies
+                            Skills
                         </Link>
                     </div>
                     <div>
@@ -74,6 +72,17 @@ export default function AdminDashboard() {
                             Projects
                         </Link>
                     </div>
+                    <div>
+                        <Link
+                            onClick={() => handleClick("Account")}
+                            className={
+                                content === "Account" ? styles.selected : ""
+                            }
+                        >
+                            Account
+                        </Link>
+                    </div>
+                    <button onClick={handleExpandBtnClick}>></button>
                 </div>
                 <div>{renderContent()}</div>
             </div>

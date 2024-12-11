@@ -6,6 +6,7 @@
     padding: 20px;
     border-radius: 12px;
     max-width: 400px;
+    min-width: 300px;
     background-color: #f9f9f9;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
@@ -18,11 +19,13 @@
 
 .container > i:nth-of-type(1) {
     position: absolute;
+    top: 2px;
     right: 10px;
 }
 
 .container > i:nth-of-type(2) {
     position: absolute;
+    top: 2px;
     right: 30px;
 }
 

@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-const domain = process.env.REACT_APP_DOMAIN
+const domain = process.env.REACT_APP_DOMAIN;
 
 export const api = axios.create({
     baseURL: domain,
@@ -33,50 +33,6 @@ privateApi.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
-export const fetchLastestPosts = async (setGlobalMessage) => {
-    try {
-        const response = await api.get("/posts/listed/latest");
-        return response.data;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-export const fetchAllListedPosts = async (setGlobalMessage) => {
-    try {
-        const response = await api.get("/posts/listed");
-        return response.data;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
 
 export const fetchSkills = async (setGlobalMessage) => {
     try {
@@ -123,173 +79,6 @@ export const login = async (credentials, setGlobalMessage) => {
     }
 };
 
-export const fetchAllPosts = async (setGlobalMessage) => {
-    try {
-        const response = await privateApi.get("/posts");
-        return response.data;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-export const togglePostListing = async (post_id, setGlobalMessage) => {
-    try {
-        const response = await privateApi.patch(
-            `/posts/${post_id}/toggle-listing`
-        );
-        setGlobalMessage({ msg: response.data.msg });
-        return true;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-export const deletePost = async (post_id, setGlobalMessage) => {
-    try {
-        const response = await privateApi.delete(`/posts/${post_id}`);
-        setGlobalMessage({ msg: response.data.msg });
-        return true;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-export const fetchThumbnails = async (setGlobalMessage) => {
-    try {
-        const response = await privateApi.get("/posts/thumbnail");
-        console.log(response.data);
-        return response.data;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-export const updatePost = async (post_id, body, setGlobalMessage) => {
-    try {
-        const response = await privateApi.patch(`/posts/${post_id}`, body);
-        setGlobalMessage({ msg: response.data.msg });
-        return true;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-export const uploadThumbnail = async (form, setGlobalMessage) => {
-    try {
-        const response = await privateApi.post("/posts/thumbnail", form, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        setGlobalMessage({ msg: response.data.msg });
-        return true;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
-
-export const createPost = async (post, setGlobalMessage) => {
-    try {
-        const response = await privateApi.post("/posts/", post);
-        setGlobalMessage({ msg: response.data.msg });
-        return true;
-    } catch (err) {
-        if (err.response) {
-            console.error("backend error:", err.response.data.msg);
-            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
-        } else if (err.request) {
-            console.error("network error:", err.request);
-            setGlobalMessage({
-                msg: "unable to reach the server",
-                type: "error",
-            });
-        } else {
-            console.error("unknown error:", err.message);
-            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
-        }
-        return null;
-    }
-};
-
 export const getSkills = async (setGlobalMessage) => {
     try {
         const response = await api.get("/skills");
@@ -311,7 +100,6 @@ export const getSkills = async (setGlobalMessage) => {
         return null;
     }
 };
-
 
 export const createLanguege = async (language, setGlobalMessage) => {
     try {
@@ -336,7 +124,6 @@ export const createLanguege = async (language, setGlobalMessage) => {
     }
 };
 
-
 export const createTech = async (tech, setGlobalMessage) => {
     try {
         const response = await privateApi.post("/skills/techonolgy", tech);
@@ -360,10 +147,11 @@ export const createTech = async (tech, setGlobalMessage) => {
     }
 };
 
-
 export const deleteTech = async (tech_id, setGlobalMessage) => {
     try {
-        const response = await privateApi.delete(`/skills/techonolgy/${tech_id}`);
+        const response = await privateApi.delete(
+            `/skills/techonolgy/${tech_id}`
+        );
         setGlobalMessage({ msg: response.data.msg });
         return true;
     } catch (err) {
@@ -384,8 +172,7 @@ export const deleteTech = async (tech_id, setGlobalMessage) => {
     }
 };
 
-
-export const deleteLanguege= async (lang_id, setGlobalMessage) => {
+export const deleteLanguege = async (lang_id, setGlobalMessage) => {
     try {
         const response = await privateApi.delete(`/skills/language/${lang_id}`);
         setGlobalMessage({ msg: response.data.msg });
@@ -408,10 +195,12 @@ export const deleteLanguege= async (lang_id, setGlobalMessage) => {
     }
 };
 
-
-export const updateLanguege= async (lang_id, language, setGlobalMessage) => {
+export const updateLanguege = async (lang_id, language, setGlobalMessage) => {
     try {
-        const response = await privateApi.patch(`/skills/language/${lang_id}`, language);
+        const response = await privateApi.patch(
+            `/skills/language/${lang_id}`,
+            language
+        );
         setGlobalMessage({ msg: response.data.msg });
         return true;
     } catch (err) {
@@ -431,11 +220,13 @@ export const updateLanguege= async (lang_id, language, setGlobalMessage) => {
         return null;
     }
 };
-
 
 export const updateTech = async (tech_id, tech, setGlobalMessage) => {
     try {
-        const response = await privateApi.patch(`/skills/techonolgy/${tech_id}`, tech);
+        const response = await privateApi.patch(
+            `/skills/techonolgy/${tech_id}`,
+            tech
+        );
         setGlobalMessage({ msg: response.data.msg });
         return true;
     } catch (err) {
@@ -455,7 +246,6 @@ export const updateTech = async (tech_id, tech, setGlobalMessage) => {
         return null;
     }
 };
-
 
 export const fetchAllProjects = async (setGlobalMessage) => {
     try {
@@ -479,12 +269,11 @@ export const fetchAllProjects = async (setGlobalMessage) => {
     }
 };
 
-
 export const deletProject = async (project_id, setGlobalMessage) => {
     try {
         const response = await api.delete(`/projects/${project_id}`);
-        setGlobalMessage({msg: response.data.msg})
-        return true
+        setGlobalMessage({ msg: response.data.msg });
+        return true;
     } catch (err) {
         if (err.response) {
             console.error("backend error:", err.response.data.msg);
@@ -502,14 +291,12 @@ export const deletProject = async (project_id, setGlobalMessage) => {
         return null;
     }
 };
-
-
 
 export const addProject = async (project, setGlobalMessage) => {
     try {
         const response = await privateApi.post("/projects/", project);
-        setGlobalMessage({msg: response.data.msg})
-        return true
+        setGlobalMessage({ msg: response.data.msg });
+        return true;
     } catch (err) {
         if (err.response) {
             console.error("backend error:", err.response.data.msg);
@@ -527,3 +314,27 @@ export const addProject = async (project, setGlobalMessage) => {
         return null;
     }
 };
+
+
+export const changePassword = async (newPass, setGlobalMessage) => {
+    try {
+        const response = await privateApi.patch("/auth/password", newPass);
+        setGlobalMessage({ msg: response.data.msg });
+        return true;
+    } catch (err) {
+        if (err.response) {
+            console.error("backend error:", err.response.data.msg);
+            setGlobalMessage({ msg: err.response.data.msg, type: "error" });
+        } else if (err.request) {
+            console.error("network error:", err.request);
+            setGlobalMessage({
+                msg: "unable to reach the server",
+                type: "error",
+            });
+        } else {
+            console.error("unknown error:", err.message);
+            setGlobalMessage({ msg: "Unknown error occurred", type: "error" });
+        }
+        return null;
+    }
+}
