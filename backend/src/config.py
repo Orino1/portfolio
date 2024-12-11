@@ -22,7 +22,7 @@ class Config:
     JWT_TOKEN_LOCATION = ["cookies"]
     JWT_COOKIE_CSRF_PROTECT = False
     JWT_COOKIE_SAMESITE = None
-    JWT_COOKIE_SECURE = False
+    JWT_COOKIE_SECURE = os.getenv("JWT_COOKIE_SECURE") == "True"
 
 
 logger = logging.getLogger("main")
