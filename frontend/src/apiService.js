@@ -2,13 +2,15 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
+const domain = process.env.REACT_APP_DOMAIN
+
 export const api = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: domain,
     withCredentials: true,
 });
 
 export const privateApi = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: domain,
     withCredentials: true,
 });
 
